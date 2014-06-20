@@ -18,3 +18,12 @@ ant
 
 The build will create a directory build/dist where you find a start.sh.
 Execute it and you got the project running at http://localhost:9080
+
+Project structure
+=================
+```
+/core           => Core PHP Applicatipn
+/web            => Web Binding
+    /web/app    => Angular-App with static html
+    /web/php    => JSON-Rest-API to publish data from the Core
+```
