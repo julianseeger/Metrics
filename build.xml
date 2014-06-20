@@ -4,10 +4,11 @@
     <property name="npm-executable" value="/usr/bin/npm"/>
     <property name="client-root" value="${basedir}/web"/>
     <property name="server-root" value="${basedir}/web/php"/>
+    <property name="dist" value="${basedir}/build/dist"/>
 
     <include file="${basedir}/composer.xml" as="composer"/>
 
-    <target name="build" depends="clean, prepare, build-js, build-server, build-core"/>
+    <target name="build" depends="clean, prepare, build-js, build-server, build-core, dist"/>
 
     <target name="clean">
         <delete dir="${basedir}/build"/>
@@ -15,6 +16,7 @@
 
     <target name="prepare">
         <mkdir dir="${basedir}/build"/>
+        <mkdir dir="${basedir}/build/dist"/>
     </target>
 
     <target name="install-js">
@@ -39,7 +41,7 @@
             <arg value="build"/>
         </exec>
 
-        <copy todir="${basedir}/build/web">
+        <copy todir="${dist}/web">
             <fileset dir="${client-root}/dist"/>
         </copy>
     </target>
@@ -55,7 +57,7 @@
     <target name="build-server" depends="install-server">
         <echo message="Building Web-Server"/>
 
-        <copy todir="${basedir}/build/php">
+        <copy todir="${dist}/php">
             <fileset dir="${server-root}"/>
         </copy>
     </target>
@@ -63,5 +65,12 @@
     <target name="build-core">
         <echo message="Building Metrics-Core"/>
 
+    </target>
+
+    <target name="install" depends="install-js, install-server"/>
+
+    <target name="dist">
+        <copy todir="${dist}" file="${basedir}/resources/start.sh"/>
+        <chmod perm="777" file="${dist}/start.sh"/>
     </target>
 </project>
