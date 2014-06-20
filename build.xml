@@ -4,19 +4,27 @@
     <property name="npm-executable" value="/usr/bin/npm"/>
     <property name="client-root" value="${basedir}/web"/>
     <property name="server-root" value="${basedir}/web/php"/>
+    <property name="core-root" value="${basedir}/core"/>
     <property name="dist" value="${basedir}/build/dist"/>
+    <property name="phpunit" value="${basedir}/phpunit"/>
 
     <include file="${basedir}/composer.xml" as="composer"/>
 
-    <target name="build" depends="clean, prepare, build-js, build-server, build-core, dist"/>
+    <target name="build" depends="clean, prepare, check, build-js, build-server, build-core, dist"/>
 
     <target name="clean">
         <delete dir="${basedir}/build"/>
     </target>
 
+    <target name="check" depends="prepare,test-server,test-core,test-js,phpcs,phpmd,phpcpd,lint,pdepend"/>
+    <target name="style" depends="prepare,phpcs,phpmd,phpcpd,pdepend"/>
+
     <target name="prepare">
         <mkdir dir="${basedir}/build"/>
         <mkdir dir="${basedir}/build/dist"/>
+        <mkdir dir="${basedir}/build/dist/web"/>
+        <mkdir dir="${basedir}/build/logs"/>
+        <mkdir dir="${basedir}/build/logs/pdepend"/>
     </target>
 
     <target name="install-js">
@@ -41,30 +49,50 @@
             <arg value="build"/>
         </exec>
 
-        <copy todir="${dist}/web">
+        <copy todir="${dist}/web/public">
             <fileset dir="${client-root}/dist"/>
         </copy>
     </target>
 
-    <target name="install-server">
+    <target name="install-server" depends="install-php"/>
+    <target name="install-php">
         <antcall target="composer.composer">
-            <param name="composer.basedir" value="${server-root}"/>
-            <param name="composer.phar" value="${server-root}/composer.phar"/>
-            <param name="composer.lock" value="${server-root}/composer.lock"/>
+            <param name="composer.basedir" value="${basedir}"/>
+            <param name="composer.phar" value="${basedir}/composer.phar"/>
+            <param name="composer.lock" value="${basedir}/composer.lock"/>
         </antcall>
     </target>
 
-    <target name="build-server" depends="install-server">
+    <target name="test-server" depends="install-server">
+        <exec failonerror="true" executable="${phpunit}">
+            <arg value="${server-root}"/>
+        </exec>
+    </target>
+
+    <target name="build-server" depends="install-server, test-server">
         <echo message="Building Web-Server"/>
 
-        <copy todir="${dist}/php">
+        <copy todir="${dist}/web/php">
             <fileset dir="${server-root}"/>
         </copy>
     </target>
 
-    <target name="build-core">
+    <target name="install-core" depends="install-php"/>
+    <target name="test-core" depends="install-core">
+        <exec executable="${phpunit}" failonerror="true">
+            <arg value="${core-root}"/>
+        </exec>
+    </target>
+
+    <target name="build-core" depends="install-core, test-core">
         <echo message="Building Metrics-Core"/>
 
+        <copy todir="${dist}/core">
+            <fileset dir="${core-root}"/>
+        </copy>
+        <copy todir="${dist}/vendor">
+            <fileset dir="${basedir}/vendor"/>
+        </copy>
     </target>
 
     <target name="install" depends="install-js, install-server"/>
@@ -72,5 +100,56 @@
     <target name="dist">
         <copy todir="${dist}" file="${basedir}/resources/start.sh"/>
         <chmod perm="777" file="${dist}/start.sh"/>
+    </target>
+
+
+    <target name="lint">
+        <apply executable="php" failonerror="true">
+            <arg value="-l"/>
+            <fileset dir="${basedir}/core">
+                <include name="**/*.php"/>
+                <modified/>
+            </fileset>
+            <fileset dir="${basedir}/web">
+                <include name="**/*.php"/>
+                <modified/>
+            </fileset>
+        </apply>
+    </target>
+
+    <target name="pdepend">
+        <exec executable="${basedir}/vendor/bin/pdepend" failonerror="true">
+            <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml"/>
+            <arg value="--jdepend-chart=${basedir}/build/logs/pdepend/dependencies.svg"/>
+            <arg value="--overview-pyramid=${basedir}/build/logs/pdepend/overview-pyramid.svg"/>
+            <arg value="--ignore=${basedir}/vendor"/>
+            <arg value="${core-root},${server-root}"/>
+        </exec>
+    </target>
+
+    <target name="phpmd">
+        <exec executable="${basedir}/vendor/bin/phpmd" failonerror="true">
+            <arg value="${core-root},${server-root}"/>
+            <arg value="text"/>
+            <arg value="${basedir}/phpmd.xml"/>
+        </exec>
+    </target>
+
+    <target name="phpcs">
+        <exec executable="${basedir}/vendor/bin/phpcs" failonerror="true">
+            <arg value="--standard=PSR2"/>
+            <arg value="--ignore=vendor/**,build/**,web/dist"/>
+            <arg value="--extensions=php"/>
+            <arg path="${basedir}"/>
+        </exec>
+    </target>
+
+    <target name="phpcpd">
+        <exec executable="${basedir}/vendor/bin/phpcpd" failonerror="true">
+            <arg value="--log-pmd"/>
+            <arg value="${basedir}/build/logs/pmd-cpd.xml"/>
+            <arg path="${core-root}"/>
+            <arg path="${server-root}"/>
+        </exec>
     </target>
 </project>

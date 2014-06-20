@@ -1,2 +1,6 @@
-build
+/build
 ${composer.properties.tmp}
+/vendor
+/.vagrant
+/composer.phar
+/cache.properties

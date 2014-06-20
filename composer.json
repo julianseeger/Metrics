@@ -12,6 +12,13 @@
       "squizlabs/php_codesniffer":        "1.*",
       "theseer/phpdox":                   "0.6.5",
       "mikey179/vfsStream":               ">=1.2.0",
-      "pdepend/pdepend" :                 "1.1.1"
+      "pdepend/pdepend" :                 "1.1.1",
+      "sebastian/phpcpd":                 "*"
+    },
+    "autoload": {
+      "psr-4": {
+        "Metrics\\Api\\": ["web/php/src/", "web/php/tests"],
+        "Metrics\\Core\\": ["core/src", "core/tests"]
+      }
     }
 }
