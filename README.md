@@ -22,6 +22,7 @@ Execute it and you got the project running at http://localhost:9080
 ```bash
 vagrant up
 ```
+and then you can access the dist via http://localhost:9080
 ;)
 
 
