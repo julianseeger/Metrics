@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Metrics" basedir="." default="build">
+    <property name="php-executable" value="/usr/bin/php"/>
+    <property name="npm-executable" value="/usr/bin/npm"/>
+    <property name="client-root" value="${basedir}/web"/>
+    <property name="server-root" value="${basedir}/web/php"/>
+
+    <include file="${basedir}/composer.xml" as="composer"/>
+
+    <target name="build" depends="clean, prepare, build-js, build-server, build-core"/>
+
+    <target name="clean">
+        <delete dir="${basedir}/build"/>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${basedir}/build"/>
+    </target>
+
+    <target name="install-js">
+        <exec executable="${npm-executable}" dir="${client-root}" failonerror="true">
+            <arg value="install"/>
+            <arg value="-l"/>
+        </exec>
+        <exec executable="node_modules/.bin/bower" dir="${client-root}" failonerror="true">
+            <arg value="install"/>
+        </exec>
+    </target>
+
+    <target name="test-js" depends="install-js">
+        <exec executable="node_modules/.bin/grunt" dir="${client-root}" failonerror="true">
+            <arg value="test"/>
+        </exec>
+    </target>
+
+    <target name="build-js" depends="install-js,test-js">
+        <echo message="Building Web-js"/>
+        <exec executable="node_modules/.bin/grunt" dir="${client-root}" failonerror="true">
+            <arg value="build"/>
+        </exec>
+
+        <copy todir="${basedir}/build/web">
+            <fileset dir="${client-root}/dist"/>
+        </copy>
+    </target>
+
+    <target name="install-server">
+        <antcall target="composer.composer">
+            <param name="composer.basedir" value="${server-root}"/>
+            <param name="composer.phar" value="${server-root}/composer.phar"/>
+            <param name="composer.lock" value="${server-root}/composer.lock"/>
+        </antcall>
+    </target>
+
+    <target name="build-server" depends="install-server">
+        <echo message="Building Web-Server"/>
+
+        <copy todir="${basedir}/build/php">
+            <fileset dir="${server-root}"/>
+        </copy>
+    </target>
+
+    <target name="build-core">
+        <echo message="Building Metrics-Core"/>
+
+    </target>
+</project>
