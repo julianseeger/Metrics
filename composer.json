@@ -17,7 +17,7 @@
     },
     "autoload": {
       "psr-4": {
-        "Metrics\\Api\\": ["web/php/src/", "web/php/tests"],
+        "Metrics\\Web\\": ["web/php/src/", "web/php/tests"],
         "Metrics\\Core\\": ["core/src", "core/tests"]
       }
     }
