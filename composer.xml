@@ -40,7 +40,7 @@
             <available file="${composer.lock}"/>
         </condition>
         <echo message="Beginning composer ${composer.command}" level="debug" />
-        <exec executable="${composer.phar}" dir="${composer.basedir}">
+        <exec executable="${composer.phar}" dir="${composer.basedir}" failonerror="true">
             <arg value="${composer.command}" />
             <arg value="--no-interaction" />
             <arg value="--prefer-dist" />

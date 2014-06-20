@@ -15,9 +15,15 @@ exit
 
 ant
 ```
-
 The build will create a directory build/dist where you find a start.sh.
 Execute it and you got the project running at http://localhost:9080
+
+## the easy (but slow) way:
+```bash
+vagrant up
+```
+;)
+
 
 Project structure
 =================
