@@ -17,10 +17,9 @@ angular
     'ngSanitize',
     'ngTouch'
   ])
-  .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-    $locationProvider.html5Mode(true);
+  .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
-      .when('/dashboard', {
+      .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
@@ -29,6 +28,6 @@ angular
         controller: 'AboutCtrl'
       })
       .otherwise({
-        redirectTo: '/dashboard'
+        redirectTo: '/'
       });
   }]);
