@@ -48,10 +48,10 @@
             <li><a href="bootstrap-elements.html"><i class="fa fa-desktop"></i> Bootstrap Elements</a></li>
             <li><a href="bootstrap-grid.html"><i class="fa fa-wrench"></i> Bootstrap Grid</a></li>
             <li ng-class="{active:isActive('/about')}"><a ng-href="#/about"><i class="fa fa-file"></i> About</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i> Dropdown <b class="caret"></b></a>
+            <li class="dropdown" on-toggle="toggled(open)">
+              <a href="#" class="dropdown-toggle"><i class="fa fa-caret-square-o-down"></i> Dropdown <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a ng-repeat="project in projects" href="#">> {{ project.name }}</a></li>
+                <li ng-repeat="project in projects"><a href="#">> {{ project.name }}</a></li>
                 <li><a ng-click="addProject()" href="#">Add Project</a></li>
               </ul>
             </li>

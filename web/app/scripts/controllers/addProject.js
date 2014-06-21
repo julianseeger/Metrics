@@ -5,10 +5,6 @@ var AddProjectCtl = function ($scope, $modalInstance, Api) {
   $scope.project = new Project();
   $scope.project.name = 'projectname';
 
-  $scope.save = function() {
-    Api.save($scope.project);
-  };
-
   $scope.ok = function () {
     Api.addProject($scope.project);
     $modalInstance.close($scope.project);
