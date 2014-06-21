@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name clientApp.controller:MainCtrl
+ * @name metricsApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the clientApp
+ * Controller of the metricsApp
  */
 angular.module('metricsApp')
   .controller('MainCtrl', ['$scope', function ($scope) {

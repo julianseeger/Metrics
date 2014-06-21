@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="styles/font-awesome.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="clientApp">
+  <body ng-app="metricsApp">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -38,23 +38,21 @@
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <div class="collapse navbar-collapse navbar-ex1-collapse" ng-controller="NaviCtl">
           <ul class="nav navbar-nav side-nav">
-            <li class="active"><a ng-href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li ng-class="{active:isActive('/')}"><a ng-href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="charts.html"><i class="fa fa-bar-chart-o"></i> Charts</a></li>
             <li><a href="tables.html"><i class="fa fa-table"></i> Tables</a></li>
             <li><a href="forms.html"><i class="fa fa-edit"></i> Forms</a></li>
             <li><a href="typography.html"><i class="fa fa-font"></i> Typography</a></li>
             <li><a href="bootstrap-elements.html"><i class="fa fa-desktop"></i> Bootstrap Elements</a></li>
             <li><a href="bootstrap-grid.html"><i class="fa fa-wrench"></i> Bootstrap Grid</a></li>
-            <li><a ng-href="#/about"><i class="fa fa-file"></i> About</a></li>
+            <li ng-class="{active:isActive('/about')}"><a ng-href="#/about"><i class="fa fa-file"></i> About</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i> Dropdown <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Dropdown Item</a></li>
-                <li><a href="#">Another Item</a></li>
-                <li><a href="#">Third Item</a></li>
-                <li><a href="#">Last Item</a></li>
+                <li><a ng-repeat="project in projects" href="#">> {{ project.name }}</a></li>
+                <li><a ng-click="addProject()" href="#">Add Project</a></li>
               </ul>
             </li>
           </ul>
@@ -124,22 +122,6 @@
 
     <div id="page-wrapper" ng-view="">
 
-
-
-      <!-- Add your site or application content here -->
-    <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted">client</h3>
-      </div>
-
-      <div class="footer">
-        <p>***</p>
-      </div>
     </div>
 
 
@@ -170,19 +152,22 @@
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/services/api.js"></script>
         <script src="scripts/app.js"></script>
+        <script src="scripts/services/api.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/navi.js"></script>
+        <script src="scripts/controllers/addProject.js"></script>
         <!-- endbuild -->
 
 
 
   </div>
-  </div>
+
   </body>
 </html>

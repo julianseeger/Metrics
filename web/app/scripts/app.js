@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc overview
- * @name clientApp
+ * @name metricsApp
  * @description
- * # clientApp
+ * # metricsApp
  *
  * Main module of the application.
  */
@@ -15,7 +15,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ui.bootstrap'
   ])
   .config(['$routeProvider', function ($routeProvider) {
 

@@ -30,7 +30,8 @@ $app->get('/projects', function () use ($repositoryFactory) {
     }
 );
 $app->post('/projects', function(Request $request) use ($repositoryFactory) {
-        $name = $request->get('name');
+        $content = json_decode($request->getContent());
+        $name = $content->name;
         $interactor = new \Metrics\Core\Interactor\AddProjectInteractor($repositoryFactory->getProjectRepository());
         $interactor->execute($name);
         return new Response('', 201);
