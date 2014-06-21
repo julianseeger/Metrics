@@ -14,10 +14,10 @@ function ApiService($resource) {
 
   /** @type Project project */
   this.addProject = function(project) {
-    console.log(project);
-    console.log('adding project with name ' + project.name);
     var remoteProject = new this.projectsApi({name: project.name});
-    return remoteProject.$save();
+    remoteProject.$save();
+    this.projects.push(remoteProject);
+    return remoteProject;
   };
 
   this.getProjects = function() {

@@ -29,4 +29,17 @@ describe('Service: ApiService', function () {
     expect(Api.projects[0].name).toBe('project1');
     expect(Api.projects[1].name).toBe('project2');
   }));
+
+  /** @type ApiService Api */
+  it('should add projects', inject(function (Api) {
+    $httpBackend.flush();
+
+    $httpBackend.expectPOST('api/projects', {name: 'projectname'}.stringify).respond(201, '');
+    var project = new Project();
+    project.name = 'projectname';
+    Api.addProject(project);
+
+    $httpBackend.flush();
+    expect(Api.projects.length).toBe(3);
+  }));
 });
