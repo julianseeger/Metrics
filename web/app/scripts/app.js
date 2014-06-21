@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular
-  .module('clientApp', [
+  .module('metricsApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -18,6 +18,7 @@ angular
     'ngTouch'
   ])
   .config(['$routeProvider', function ($routeProvider) {
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',

@@ -12,6 +12,6 @@ class JsonShowProjectsPresenterTest extends \PHPUnit_Framework_TestCase
         $project = new Project();
         $project->setName('testproject');
 
-        $this->assertEquals('{"projects":{"0":{"name":"testproject"}}}', $presenter->present([$project]));
+        $this->assertEquals('[{"name":"testproject"}]', $presenter->present([$project]));
     }
 }

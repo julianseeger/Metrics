@@ -13,7 +13,7 @@ class JsonShowProjectsPresenter implements ShowProjectsPresenter
      */
     public function present(array $projects)
     {
-        return json_encode(['projects' => $this->getProjectDtos($projects)], JSON_FORCE_OBJECT);
+        return json_encode($this->getProjectDtos($projects));
     }
 
     /**

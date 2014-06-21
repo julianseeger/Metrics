@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the clientApp
  */
-angular.module('clientApp')
+angular.module('metricsApp')
   .controller('MainCtrl', ['$scope', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
