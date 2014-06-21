@@ -41,20 +41,15 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse" ng-controller="NaviCtl">
           <ul class="nav navbar-nav side-nav">
             <li ng-class="{active:isActive('/')}"><a ng-href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="charts.html"><i class="fa fa-bar-chart-o"></i> Charts</a></li>
-            <li><a href="tables.html"><i class="fa fa-table"></i> Tables</a></li>
-            <li><a href="forms.html"><i class="fa fa-edit"></i> Forms</a></li>
-            <li><a href="typography.html"><i class="fa fa-font"></i> Typography</a></li>
-            <li><a href="bootstrap-elements.html"><i class="fa fa-desktop"></i> Bootstrap Elements</a></li>
-            <li><a href="bootstrap-grid.html"><i class="fa fa-wrench"></i> Bootstrap Grid</a></li>
-            <li ng-class="{active:isActive('/about')}"><a ng-href="#/about"><i class="fa fa-file"></i> About</a></li>
             <li class="dropdown" on-toggle="toggled(open)">
-              <a href="#" class="dropdown-toggle"><i class="fa fa-caret-square-o-down"></i> Dropdown <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle"><i class="fa fa-github"></i> Projects <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li ng-repeat="project in projects"><a href="#">> {{ project.name }}</a></li>
-                <li><a ng-click="addProject()" href="#">Add Project</a></li>
+                <li ng-repeat="project in projects"><a href="#"><i class="fa fa-github"></i> <b>{{ project.name }}</b></a></li>
+                <li><a ng-click="addProject()" href="#"><i class="fa fa-plus"></i> <b>Add Project</b></a></li>
               </ul>
             </li>
+
+            <li ng-class="{active:isActive('/about')}"><a ng-href="#/about"><i class="fa fa-file"></i> About</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
