@@ -2,6 +2,7 @@
 
 namespace Metrics\Web\Repository\File;
 
+use Metrics\Core\Repository\ProjectRepository;
 use Metrics\Web\Repository\RepositoryFactory;
 
 class FileRepositoryFactory implements RepositoryFactory
@@ -14,10 +15,18 @@ class FileRepositoryFactory implements RepositoryFactory
     }
 
     /**
-     * @return \Metrics\Core\Repository\ProjectRepository|FileProjectRepository
+     * @return ProjectRepository
      */
     public function getProjectRepository()
     {
         return new FileProjectRepository($this->directory);
+    }
+
+    /**
+     * @return VersionRepository
+     */
+    public function getVersionRepository()
+    {
+        return new FileVersionRepository($this->directory);
     }
 }

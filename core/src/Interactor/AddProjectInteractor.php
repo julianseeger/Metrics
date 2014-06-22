@@ -19,7 +19,7 @@ class AddProjectInteractor
 
     public function execute($name)
     {
-        $project = new Project();
+        $project = new Project('a');
         $project->setName($name);
         $this->projectRepository->save($project);
     }

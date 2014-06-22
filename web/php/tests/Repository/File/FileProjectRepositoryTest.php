@@ -17,8 +17,8 @@ class FileProjectRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testPersistsObjects()
     {
         $projects = [
-            new Project(),
-            new Project()
+            new Project("a"),
+            new Project("b")
         ];
         $repo1 = new FileProjectRepository($this->directory);
         foreach ($projects as $project) {
@@ -28,7 +28,7 @@ class FileProjectRepositoryTest extends \PHPUnit_Framework_TestCase
         $repo2 = new FileProjectRepository($this->directory);
         $this->assertEquals($projects, $repo2->findAll());
 
-        $project3 = new Project();
+        $project3 = new Project("c");
         $projects[] = $project3;
         $repo1->save($project3);
         $this->assertEquals($projects, $repo2->findAll());

@@ -11,8 +11,8 @@ class ShowProjectsInteractorTest extends \PHPUnit_Framework_TestCase
     public function testFetchesAllProjects()
     {
         $projects = [
-            new Project(),
-            new Project()
+            new Project("a"),
+            new Project("b")
         ];
         $presenter = new GenericArrayPresenter();
         $repo = new ProjectRepositoryMock();
