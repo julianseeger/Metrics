@@ -23,13 +23,17 @@ $app->get(
         return "hallo!";
     }
 );
-$app->get('/projects', function () use ($repositoryFactory) {
+$app->get(
+    '/projects',
+    function () use ($repositoryFactory) {
         $presenter = new JsonShowProjectsPresenter();
         $interactor = new ShowProjectsInteractor($repositoryFactory->getProjectRepository(), $presenter);
         return $interactor->execute();
     }
 );
-$app->post('/projects', function(Request $request) use ($repositoryFactory) {
+$app->post(
+    '/projects',
+    function (Request $request) use ($repositoryFactory) {
         $content = json_decode($request->getContent());
         $name = $content->name;
         $interactor = new \Metrics\Core\Interactor\AddProjectInteractor($repositoryFactory->getProjectRepository());
