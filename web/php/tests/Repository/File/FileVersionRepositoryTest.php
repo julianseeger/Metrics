@@ -17,31 +17,26 @@ class FileVersionRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testPersistsObjects()
     {
+        $repo1 = new FileVersionRepository($this->directory);
         $project = new Project("testproject");
         $versions = [
-            new Version("a", $project),
-            new Version("b", $project)
+            $repo1->create($project, "a"),
+            $repo1->create($project, "b")
         ];
-        $repo1 = new FileVersionRepository($this->directory);
-        foreach ($versions as $version) {
-            $repo1->save($version);
-        }
 
         $repo2 = new FileVersionRepository($this->directory);
         $this->assertEquals($versions, $repo2->findAll($project));
 
-        $version3 = new Version("c", $project);
+        $version3 = $repo1->create($project, "c");
         $versions[] = $version3;
-        $repo1->save($version3);
         $this->assertEquals($versions, $repo2->findAll($project));
     }
 
     public function testFindOne()
     {
-        $project = new Project("testproject");
-        $version = new Version("testlabel", $project);
         $repo = new FileVersionRepository($this->directory);
-        $repo->save($version);
+        $project = new Project("testproject");
+        $version = $repo->create($project, "testlabel");
 
         $this->assertEquals($version, $repo->findOne($project, "testlabel"));
     }
@@ -59,4 +54,3 @@ class FileVersionRepositoryTest extends \PHPUnit_Framework_TestCase
         rmdir($this->directory);
     }
 }
- 

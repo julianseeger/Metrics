@@ -21,4 +21,11 @@ interface VersionRepository
     public function findAll(Project $project);
 
     public function save(Version $version);
+
+    /**
+     * @param Project $project
+     * @param $label
+     * @return Version
+     */
+    public function create(Project $project, $label);
 }

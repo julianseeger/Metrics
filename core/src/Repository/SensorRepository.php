@@ -2,14 +2,14 @@
 
 namespace Metrics\Core\Repository;
 
-use Metrics\Core\Entity\MetricType;
+use Metrics\Core\Entity\MaterialType;
 use Metrics\Core\Interactor\Sensor\Sensor;
 
 interface SensorRepository
 {
     /**
-     * @param MetricType $type
+     * @param MaterialType $type
      * @return Sensor[]
      */
-    public function findByType(MetricType $type);
+    public function findByType(MaterialType $type);
 }

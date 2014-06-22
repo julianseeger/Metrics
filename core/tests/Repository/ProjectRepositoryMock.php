@@ -25,7 +25,6 @@ class ProjectRepositoryMock implements ProjectRepository
      */
     public function save(Project $project)
     {
-        $this->projects[] = $project;
     }
 
     /**
@@ -35,5 +34,16 @@ class ProjectRepositoryMock implements ProjectRepository
     public function findOne($projectId)
     {
 
+    }
+
+    /**
+     * @param $name
+     * @return Project
+     */
+    public function create($name)
+    {
+        $project = new Project($name);
+        $this->projects[] = $project;
+        return $project;
     }
 }

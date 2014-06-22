@@ -22,4 +22,10 @@ interface ProjectRepository
      * @return Project
      */
     public function findOne($projectId);
+
+    /**
+     * @param $name
+     * @return Project
+     */
+    public function create($name);
 }

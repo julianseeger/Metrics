@@ -21,13 +21,17 @@ class FileProjectRepository extends AbstractFileRepository implements ProjectRep
     }
 
     /**
-     * @param \Metrics\Core\Entity\Project $project
-     * @internal param $Project
+     * @param \Metrics\Core\Entity\Project $modifiedProject
      */
-    public function save(Project $project)
+    public function save(Project $modifiedProject)
     {
+        /** @var Project[] $projects */
         $projects = $this->load();
-        $projects[] = $project;
+        foreach ($projects as $key => $project) {
+            if ($modifiedProject->getName() == $project->getName()) {
+                $projects[$key] = $modifiedProject;
+            }
+        }
         parent::save($projects);
     }
 
@@ -38,5 +42,18 @@ class FileProjectRepository extends AbstractFileRepository implements ProjectRep
     public function findOne($projectId)
     {
         // TODO: Implement findOne() method.
+    }
+
+    /**
+     * @param $name
+     * @return Project
+     */
+    public function create($name)
+    {
+        $project = new Project($name);
+        $projects = $this->load();
+        $projects[] = $project;
+        parent::save($projects);
+        return $project;
     }
 }

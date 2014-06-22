@@ -2,7 +2,7 @@
 
 namespace Metrics\Core\Entity;
 
-class MetricType
+class MaterialType
 {
     /**
      * @var string

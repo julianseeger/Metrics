@@ -32,12 +32,19 @@ class FileVersionRepository extends AbstractFileRepository implements VersionRep
     }
 
     /**
-     * @param \Metrics\Core\Entity\Version $version
+     * @param \Metrics\Core\Entity\Version $modifiedVersion
      */
-    public function save(Version $version)
+    public function save(Version $modifiedVersion)
     {
+        /** @var Version[] $versions */
         $versions = $this->load();
-        $versions[] = $version;
+        foreach ($versions as $key => $version) {
+            if ($version->getProject()->getName() == $modifiedVersion->getProject()->getName()
+                && $version->getLabel() == $modifiedVersion->getLabel()
+            ) {
+                $versions[$key] = $modifiedVersion;
+            }
+        }
         parent::save($versions);
     }
 
@@ -57,5 +64,18 @@ class FileVersionRepository extends AbstractFileRepository implements VersionRep
         }
         return $result;
     }
+
+    /**
+     * @param Project $project
+     * @param $label
+     * @return Version
+     */
+    public function create(Project $project, $label)
+    {
+        $versions = $this->load();
+        $version = new Version($label, $project);
+        $versions[] = $version;
+        parent::save($versions);
+        return $version;
+    }
 }
- 

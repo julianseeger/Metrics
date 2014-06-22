@@ -3,6 +3,7 @@
 namespace Metrics\Web\Repository;
 
 use Metrics\Core\Repository\ProjectRepository;
+use Metrics\Core\Repository\SensorRepository;
 use Metrics\Core\Repository\VersionRepository;
 
 interface RepositoryFactory
@@ -16,4 +17,9 @@ interface RepositoryFactory
      * @return VersionRepository
      */
     public function getVersionRepository();
+
+    /**
+     * @return SensorRepository
+     */
+    public function getSensorRepository();
 }

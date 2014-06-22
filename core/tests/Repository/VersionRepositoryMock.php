@@ -31,7 +31,6 @@ class VersionRepositoryMock implements VersionRepository
 
     public function save(Version $version)
     {
-        $this->versions[] = $version;
     }
 
     public function findAll(Project $project)
@@ -43,5 +42,17 @@ class VersionRepositoryMock implements VersionRepository
             }
         }
         return $results;
+    }
+
+    /**
+     * @param Project $project
+     * @param $label
+     * @return Version
+     */
+    public function create(Project $project, $label)
+    {
+        $version = new Version($label, $project);
+        $this->versions[] = $version;
+        return $version;
     }
 }
