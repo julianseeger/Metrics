@@ -36,12 +36,18 @@ class FileProjectRepository extends AbstractFileRepository implements ProjectRep
     }
 
     /**
-     * @param $projectId
+     * @param $projectName
      * @return Project
      */
-    public function findOne($projectId)
+    public function findOne($projectName)
     {
-        // TODO: Implement findOne() method.
+        /** @var Project[] $projects */
+        $projects = $this->load();
+        foreach ($projects as $key => $project) {
+            if ($project->getName() == $projectName) {
+                return $project;
+            }
+        }
     }
 
     /**

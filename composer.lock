@@ -103,12 +103,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fruux/sabre-xml.git",
-                "reference": "9ad04a9e9a05010741f203c3a416549308ecb6ec"
+                "reference": "31aba1a8811589869f8743266f67685fd1092734"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fruux/sabre-xml/zipball/9ad04a9e9a05010741f203c3a416549308ecb6ec",
-                "reference": "9ad04a9e9a05010741f203c3a416549308ecb6ec",
+                "url": "https://api.github.com/repos/fruux/sabre-xml/zipball/31aba1a8811589869f8743266f67685fd1092734",
+                "reference": "31aba1a8811589869f8743266f67685fd1092734",
                 "shasum": ""
             },
             "require": {
@@ -143,7 +143,7 @@
                 "dom",
                 "xml"
             ],
-            "time": "2014-03-25 17:33:52"
+            "time": "2014-06-17 06:51:48"
         },
         {
             "name": "silex/silex",
@@ -151,12 +151,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex.git",
-                "reference": "965760cee5cb24dda9217aef48954ef26c6cce45"
+                "reference": "13c4e86c5a758b4826bce9891d52911a0bd438c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex/zipball/965760cee5cb24dda9217aef48954ef26c6cce45",
-                "reference": "965760cee5cb24dda9217aef48954ef26c6cce45",
+                "url": "https://api.github.com/repos/silexphp/Silex/zipball/13c4e86c5a758b4826bce9891d52911a0bd438c1",
+                "reference": "13c4e86c5a758b4826bce9891d52911a0bd438c1",
                 "shasum": ""
             },
             "require": {
@@ -233,7 +233,7 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2014-06-15 07:29:52"
+            "time": "2014-06-23 08:02:11"
         },
         {
             "name": "symfony/debug",
@@ -359,12 +359,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "bc23b721ae465a6bb73478e3b13a9eef5d06ef01"
+                "reference": "69f0f702c36d030c132d90991357bc2b84da50de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/bc23b721ae465a6bb73478e3b13a9eef5d06ef01",
-                "reference": "bc23b721ae465a6bb73478e3b13a9eef5d06ef01",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/69f0f702c36d030c132d90991357bc2b84da50de",
+                "reference": "69f0f702c36d030c132d90991357bc2b84da50de",
                 "shasum": ""
             },
             "require": {
@@ -405,7 +405,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "http://symfony.com",
-            "time": "2014-06-16 09:30:12"
+            "time": "2014-06-20 17:38:20"
         },
         {
             "name": "symfony/http-kernel",

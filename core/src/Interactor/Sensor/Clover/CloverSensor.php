@@ -5,17 +5,19 @@ namespace Metrics\Core\Interactor\Sensor\Clover;
 use Metrics\Core\Entity\DirectoryVersion;
 use Metrics\Core\Entity\FileTreeHolder;
 use Metrics\Core\Entity\FileVersion;
+use Metrics\Core\Entity\MaterialType;
 use Metrics\Core\Entity\Metric;
 use Metrics\Core\Entity\Project;
 use Metrics\Core\Entity\Version;
 use Metrics\Core\Interactor\Sensor\Clover\Dto\Coverage;
 use Metrics\Core\Interactor\Sensor\Clover\Dto\File;
 use Metrics\Core\Interactor\Sensor\Clover\Dto\HasMetrics;
+use Metrics\Core\Interactor\Sensor\Sensor;
 use Metrics\Core\Repository\FileRepository;
 use Metrics\Core\Repository\FileVersionRepository;
 use Metrics\Core\Repository\MetricRepository;
 
-class CloverSensor
+class CloverSensor implements Sensor
 {
     /**
      * @var FileRepository
@@ -158,5 +160,14 @@ class CloverSensor
                 $dir->addMetricValue($coveredstatementsMetric, $coveredstatements);
             }
         }
+    }
+
+    /**
+     * @param MaterialType $materialType
+     * @return bool
+     */
+    public function supportsMaterialType(MaterialType $materialType)
+    {
+        return $materialType->getName() === 'clover';
     }
 }

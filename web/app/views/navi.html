@@ -4,16 +4,38 @@
   <li class="dropdown" on-toggle="toggled(open)">
     <a href="#" class="dropdown-toggle"><i class="fa fa-github"></i> Projects <b class="caret"></b></a>
     <ul class="dropdown-menu">
-      <li ng-repeat="project in projects"><a href="#"><i class="fa fa-github"></i> <b>{{ project.name }}</b></a></li>
+      <li ng-repeat="project in projects"><a href="#" ng-click="selectProject(project)"><i class="fa fa-github"></i> <b>{{ project.name }}</b></a></li>
       <li><a ng-click="addProject()" href="#"><i class="fa fa-plus"></i> <b>Add Project</b></a></li>
     </ul>
   </li>
 
+  <li ng-if="ProjectScope.project" ng-class="{active:isActive('/upload')}">
+    <a ng-href="#/upload"><i class="fa fa-cloud-upload"></i> Material Upload
+    </a>
+  </li>
   <li ng-class="{active:isActive('/about')}"><a ng-href="#/about"><i class="fa fa-file"></i> About</a></li>
 </ul>
 
 <ul class="nav navbar-nav navbar-right navbar-user">
-  <li class="dropdown messages-dropdown">
+
+  <li class="dropdown alerts-dropdown" on-toggle="toggled(open)">
+    <a href="#" class="dropdown-toggle">
+      <i class="fa fa-github"></i> {{ ProjectScope.project ? ProjectScope.project.name : 'Projects' }}
+      <span class="badge" ng-if="!ProjectScope.project">{{ projects.length }}</span> <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <li ng-repeat="project in projects">
+        <a href="#" ng-click="selectProject(project)">
+          <i class="fa fa-github"></i> <b>{{ project.name }}</b>
+        </a>
+      </li>
+      <li class="divider"></li>
+      <li><a ng-click="addProject()" href="#"><i class="fa fa-plus"></i> Add Project</a></li>
+    </ul>
+  </li>
+
+
+  <li class="dropdown messages-dropdown" ng-if="ProjectScope.project">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Versions <span class="badge">7</span> <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li class="dropdown-header">7 New Versions</li>
@@ -45,19 +67,6 @@
       </li>
       <li class="divider"></li>
       <li><a href="#">View Inbox <span class="badge">7</span></a></li>
-    </ul>
-  </li>
-  <li class="dropdown alerts-dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> Projects <span class="badge">3</span> <b class="caret"></b></a>
-    <ul class="dropdown-menu">
-      <li><a href="#">Default <span class="label label-default">Default</span></a></li>
-      <li><a href="#">Primary <span class="label label-primary">Primary</span></a></li>
-      <li><a href="#">Success <span class="label label-success">Success</span></a></li>
-      <li><a href="#">Info <span class="label label-info">Info</span></a></li>
-      <li><a href="#">Warning <span class="label label-warning">Warning</span></a></li>
-      <li><a href="#">Danger <span class="label label-danger">Danger</span></a></li>
-      <li class="divider"></li>
-      <li><a href="#">View All</a></li>
     </ul>
   </li>
   <li class="dropdown user-dropdown">
