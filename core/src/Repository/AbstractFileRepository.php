@@ -51,13 +51,13 @@ abstract class AbstractFileRepository implements FileRepository
      * @param $name
      * @return File
      */
-    protected abstract function createFileInstance($name);
+    abstract protected function createFileInstance($name);
 
     /**
      * @param $name
      * @return Directory
      */
-    protected abstract function createDirectoryInstance($name);
+    abstract protected function createDirectoryInstance($name);
 
     /**
      * @param Project $project
