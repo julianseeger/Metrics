@@ -26,4 +26,3 @@ abstract class FileTreeHolder
         return $this->root;
     }
 }
- 

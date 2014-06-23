@@ -24,4 +24,3 @@ class Coverage
         return $coverage;
     }
 }
- 

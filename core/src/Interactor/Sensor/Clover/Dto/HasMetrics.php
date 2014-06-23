@@ -18,4 +18,3 @@ trait HasMetrics
         $this->metrics = Metrics::parse($element->metrics);
     }
 }
- 
