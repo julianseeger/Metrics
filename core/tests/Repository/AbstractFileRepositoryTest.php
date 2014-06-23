@@ -42,8 +42,8 @@ class AbstractFileRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($rootFiles));
 
         /** @var Directory $intermediateDirectory */
-        $intermediateDirectory = $rootFiles[0];
-        $this->assertEquals("some", $intermediateDirectory->getName());
+        $this->assertTrue($project->getRoot()->hasFile("some"));
+        $intermediateDirectory = $project->getRoot()->getFile("some");
         $this->assertContains($dir, $intermediateDirectory->getFiles());
     }
 
@@ -88,12 +88,14 @@ class AbstractFileRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $file = $repo->createFile('/some/where/file', $project);
 
+        $this->assertTrue($project->getRoot()->hasFile('some'));
         /** @var Directory $some */
-        $some = $project->getRoot()->getFiles()[0];
+        $some = $project->getRoot()->getFile('some');
         $this->assertEquals('some', $some->getName());
 
+        $this->assertTrue($some->hasFile('where'));
         /** @var Directory $where */
-        $where = $some->getFiles()[0];
+        $where = $some->getFile('where');
         $this->assertEquals('where', $where->getName());
         $this->assertContains($file, $where->getFiles());
     }

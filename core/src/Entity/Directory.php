@@ -15,9 +15,7 @@ class Directory extends File
     public function addFile(File $file)
     {
         $file->setParent($this);
-        if (!in_array($file, $this->files)) {
-            $this->files[] = $file;
-        }
+        $this->files[$file->getName()] = $file;
     }
 
     /**
@@ -26,5 +24,15 @@ class Directory extends File
     public function getFiles()
     {
         return $this->files;
+    }
+
+    public function hasFile($name)
+    {
+        return isset($this->files[$name]);
+    }
+
+    public function getFile($name)
+    {
+        return $this->files[$name];
     }
 }
