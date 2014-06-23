@@ -4,7 +4,7 @@ namespace Metrics\Core\Presenter;
 
 use Metrics\Core\Entity\Project;
 
-class GenericArrayPresenter implements ShowProjectsPresenter
+class GenericArrayPresenter implements ShowProjectsPresenter, ShowVersionsPresenter
 {
     /**
      * @param Project[] $projects
