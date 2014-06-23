@@ -24,7 +24,7 @@ class FileVersionRepository extends AbstractFileRepository implements VersionRep
         /** @var Version[] $versions */
         $versions = $this->load();
         foreach ($versions as $version) {
-            if ($version->getProject() == $project && $version->getLabel() == $label) {
+            if ($version->getProject()->getName() == $project->getName() && $version->getLabel() == $label) {
                 return $version;
             }
         }
@@ -58,7 +58,7 @@ class FileVersionRepository extends AbstractFileRepository implements VersionRep
         /** @var Version[] $versions */
         $versions = $this->load();
         foreach ($versions as $version) {
-            if ($version->getProject() == $project) {
+            if ($version->getProject()->getName() == $project->getName()) {
                 $result[] = $version;
             }
         }

@@ -2,6 +2,7 @@
 
 use Metrics\Core\Interactor\ShowProjectsInteractor;
 use Metrics\Web\Presenter\JsonShowProjectsPresenter;
+use Metrics\Web\Presenter\JsonShowVersionsPresenter;
 use Metrics\Web\Repository\File\FileRepositoryFactory;
 use Metrics\Web\Repository\RepositoryFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +33,21 @@ $app->get(
         $presenter = new JsonShowProjectsPresenter();
         $interactor = new ShowProjectsInteractor($repositoryFactory->getProjectRepository(), $presenter);
         return $interactor->execute();
+    }
+);
+$app->get(
+    '/versions/{project}',
+    function ($project) use ($repositoryFactory) {
+        $presenter = new JsonShowVersionsPresenter();
+        $projectRepository = $repositoryFactory->getProjectRepository();
+        $versionRepository = $repositoryFactory->getVersionRepository();
+        $interactor = new \Metrics\Core\Interactor\ShowVersionsInteractor(
+            $versionRepository,
+            $projectRepository,
+            $presenter
+        );
+
+        return $interactor->execute($project);
     }
 );
 $app->post(

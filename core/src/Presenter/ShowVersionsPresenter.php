@@ -12,4 +12,3 @@ interface ShowVersionsPresenter
      */
     public function present(array $versions);
 }
- 

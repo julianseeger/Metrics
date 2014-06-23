@@ -42,4 +42,15 @@ describe('Service: ApiService', function () {
     $httpBackend.flush();
     expect(Api.projects.length).toBe(3);
   }));
+
+  it('should query versions', inject(function(Api) {
+    $httpBackend.flush();
+
+    $httpBackend.expectGET('api/versions/test').respond(200, '[{"label":"0.1"}]');
+    var versions = Api.getVersions({name: 'test'});
+    $httpBackend.flush();
+
+    expect(versions.length).toBe(1);
+    expect(versions[0].label).toBe('0.1');
+  }));
 });

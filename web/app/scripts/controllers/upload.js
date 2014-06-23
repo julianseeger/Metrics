@@ -9,22 +9,21 @@
  */
 angular.module('metricsApp')
   .controller('MaterialUploadCtl', ['$scope', '$upload', 'ProjectScope', function ($scope, $upload, ProjectScope) {
-    $scope.version = '0.1';
+    $scope.version = '';
     $scope.ProjectScope = ProjectScope;
 
-    $scope.onFileSelect = function($files) {
+    $scope.onFileSelect = function($files, version) {
       //$files: an array of files selected, each file has name, size, and type.
       for (var i = 0; i < $files.length; i++) {
         var file = $files[i];
         var project = ProjectScope.project.name;
-        var version = $scope.version;
         var materialType = 'clover';
         $scope.upload = $upload.upload({
           url: 'api/material/' + project + '/' + version + '/' + materialType, //upload.php script, node.js route, or servlet url
           method: 'POST',
           // headers: {'header-key': 'header-value'},
           // withCredentials: true,
-          //data: {myObj: $scope.myModelObj},
+          data: {},
           file: file // or list of files: $files for html5 only
           /* set the file formData name ('Content-Desposition'). Default is 'file' */
           //fileFormDataName: myFile, //or a list of names for multiple files (html5).

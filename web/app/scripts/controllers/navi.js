@@ -12,6 +12,7 @@ angular.module('metricsApp')
     /** @type ApiService Api */
     $scope.projects = [];
     $scope.ProjectScope = ProjectScope;
+    $scope.versions = null;
 
     $scope.isActive = function(route) {
       return route === $location.path();
@@ -32,6 +33,7 @@ angular.module('metricsApp')
 
     $scope.selectProject = function (project) {
       ProjectScope.project = project;
+      $scope.versions = Api.getVersions(project);
     };
 
     $scope.reloadProjects = function() {

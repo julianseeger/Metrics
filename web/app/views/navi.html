@@ -1,13 +1,6 @@
 
 <ul class="nav navbar-nav side-nav">
   <li ng-class="{active:isActive('/')}"><a ng-href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-  <li class="dropdown" on-toggle="toggled(open)">
-    <a href="#" class="dropdown-toggle"><i class="fa fa-github"></i> Projects <b class="caret"></b></a>
-    <ul class="dropdown-menu">
-      <li ng-repeat="project in projects"><a href="#" ng-click="selectProject(project)"><i class="fa fa-github"></i> <b>{{ project.name }}</b></a></li>
-      <li><a ng-click="addProject()" href="#"><i class="fa fa-plus"></i> <b>Add Project</b></a></li>
-    </ul>
-  </li>
 
   <li ng-if="ProjectScope.project" ng-class="{active:isActive('/upload')}">
     <a ng-href="#/upload"><i class="fa fa-cloud-upload"></i> Material Upload
@@ -36,33 +29,14 @@
 
 
   <li class="dropdown messages-dropdown" ng-if="ProjectScope.project">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Versions <span class="badge">7</span> <b class="caret"></b></a>
+    <a href="#" class="dropdown-toggle">
+      <i class="fa fa-tag"></i> Versions <span class="badge">{{ versions.length }}</span> <b class="caret"></b>
+    </a>
     <ul class="dropdown-menu">
-      <li class="dropdown-header">7 New Versions</li>
-      <li class="message-preview">
+      <li class="dropdown-header">{{ versions.length }} New Versions</li>
+      <li class="message-preview" ng-repeat="version in versions | orderBy:'label':true">
         <a href="#">
-          <span class="avatar"><img src="http://placehold.it/50x50"></span>
-          <span class="name">John Smith:</span>
-          <span class="message">Hey there, I wanted to ask you something...</span>
-          <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
-        </a>
-      </li>
-      <li class="divider"></li>
-      <li class="message-preview">
-        <a href="#">
-          <span class="avatar"><img src="http://placehold.it/50x50"></span>
-          <span class="name">John Smith:</span>
-          <span class="message">Hey there, I wanted to ask you something...</span>
-          <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
-        </a>
-      </li>
-      <li class="divider"></li>
-      <li class="message-preview">
-        <a href="#">
-          <span class="avatar"><img src="http://placehold.it/50x50"></span>
-          <span class="name">John Smith:</span>
-          <span class="message">Hey there, I wanted to ask you something...</span>
-          <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
+          <i class="fa fa-tag"></i> {{ version.label }} <span ng-if="$first" class="label label-success">latest</span>
         </a>
       </li>
       <li class="divider"></li>
