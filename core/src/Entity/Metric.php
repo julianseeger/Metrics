@@ -2,8 +2,13 @@
 
 namespace Metrics\Core\Entity;
 
-class Project extends FileTreeHolder
+class Metric
 {
+    const LINE_COVERAGE = 'coverage';
+    const BRANCH_COVERAGE = 'branchCoverage';
+    const LINES_OF_CODE = 'loc';
+    const NON_COMMENT_LINES_OF_CODE = 'ncloc';
+
     /**
      * @var string
      */
@@ -18,15 +23,7 @@ class Project extends FileTreeHolder
     }
 
     /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {

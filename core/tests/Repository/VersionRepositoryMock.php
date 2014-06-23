@@ -31,6 +31,7 @@ class VersionRepositoryMock implements VersionRepository
 
     public function save(Version $version)
     {
+        $this->versions[$version->getProject()->getName() . '-' . $version->getLabel()];
     }
 
     public function findAll(Project $project)
@@ -52,7 +53,7 @@ class VersionRepositoryMock implements VersionRepository
     public function create(Project $project, $label)
     {
         $version = new Version($label, $project);
-        $this->versions[] = $version;
+        $this->versions[$project->getName() . "-" . $label] = $version;
         return $version;
     }
 }

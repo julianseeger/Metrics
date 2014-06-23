@@ -20,7 +20,7 @@ class AddProjectInteractorTest extends \PHPUnit_Framework_TestCase
         $projects = $repo->findAll();
         $this->assertEquals(1, count($projects));
         /** @var Project $project */
-        $project = $projects[0];
+        $project = $repo->findOne($name);
         $this->assertInstanceOf('\\Metrics\\Core\\Entity\\Project', $project);
         $this->assertEquals($name, $project->getName());
     }

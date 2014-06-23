@@ -4,6 +4,9 @@ namespace Metrics\Core\Interactor\Sensor\Clover\Dto;
 
 trait HasMetrics
 {
+    /**
+     * @var Metrics
+     */
     public $metrics;
 
     public function parseMetrics(\SimpleXMLElement $element)

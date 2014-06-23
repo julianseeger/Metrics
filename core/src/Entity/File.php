@@ -84,4 +84,20 @@ class File
     {
         return $this->namespace;
     }
+
+    /**
+     * @return null
+     */
+    public function getPath()
+    {
+        $position = $this;
+        $path = $this->getName();
+
+        while($position->getParent() !== null) {
+            $position = $position->getParent();
+            $path = $position->getName() . '/' . $path;
+        }
+
+        return $path;
+    }
 }

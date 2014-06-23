@@ -39,4 +39,19 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($file2, $directory->getFile('test.php'));
         $this->assertNotSame($file1, $directory->getFile('test.php'));
     }
+
+    public function testPathResolution()
+    {
+        $directory1 = new Directory('');
+        $directory2 = new Directory('Somewhere');
+        $directory3 = new Directory('Deep');
+
+        $file = new File('test.php');
+
+        $directory1->addFile($directory2);
+        $directory2->addFile($directory3);
+        $directory3->addFile($file);
+
+        $this->assertEquals('/Somewhere/Deep/test.php', $file->getPath());
+    }
 }

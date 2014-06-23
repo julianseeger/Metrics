@@ -2,7 +2,12 @@
 
 namespace Metrics\Core\Entity;
 
-class Version
+/**
+ * Class Version
+ * @package Metrics\Core\Entity
+ * @method DirectoryVersion getRoot()
+ */
+class Version extends FileTreeHolder
 {
     /**
      * @var Project

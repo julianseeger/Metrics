@@ -36,6 +36,10 @@ class Directory extends File
         return isset($this->files[$name]);
     }
 
+    /**
+     * @param $name
+     * @return File|Directory
+     */
     public function getFile($name)
     {
         return $this->files[$name];

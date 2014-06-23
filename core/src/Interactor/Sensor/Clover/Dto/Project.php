@@ -5,6 +5,7 @@ namespace Metrics\Core\Interactor\Sensor\Clover\Dto;
 class Project
 {
     use HasFiles;
+    use HasMetrics;
 
     /**
      * @var Package[]
@@ -26,6 +27,7 @@ class Project
         }
 
         $project->parseFiles($element);
+        $project->parseMetrics($element);
 
         return $project;
     }
