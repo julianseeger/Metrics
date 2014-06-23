@@ -43,7 +43,7 @@ class FileProjectRepository extends AbstractFileRepository implements ProjectRep
     {
         /** @var Project[] $projects */
         $projects = $this->load();
-        foreach ($projects as $key => $project) {
+        foreach ($projects as $project) {
             if ($project->getName() == $projectName) {
                 return $project;
             }

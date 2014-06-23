@@ -49,7 +49,7 @@ $app->post(
     function (Request $request, $project, $version, $materialType) use ($repositoryFactory) {
         if ($request->get('material')) {
             $material = $request->get('material');
-        } else if ($request->files->count() > 0) {
+        } elseif ($request->files->count() > 0) {
             /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $file */
             $file = $request->files->all()['file'];
             $file->move('/tmp', 'materialupload');

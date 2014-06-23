@@ -38,7 +38,7 @@ class AddMaterialInteractor
      */
     private $metricsRepository;
 
-    function __construct(
+    public function __construct(
         $fileRepository,
         $fileVersionRepository,
         $metricsRepository,
