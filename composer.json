@@ -4,7 +4,8 @@
     "minimum-stability": "dev",
     "require": {
       "silex/silex":  "*",
-      "twig/twig":    ">=1.8"
+      "twig/twig":    ">=1.8",
+      "sabre/xml" : "master-dev"
     },
     "require-dev": {
       "phpunit/phpunit":                  "3.7.*",

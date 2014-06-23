@@ -10,6 +10,11 @@ class Directory extends File
     private $files = [];
 
     /**
+     * @var string
+     */
+    private $package = null;
+
+    /**
      * @param File $file
      */
     public function addFile(File $file)
@@ -34,5 +39,21 @@ class Directory extends File
     public function getFile($name)
     {
         return $this->files[$name];
+    }
+
+    /**
+     * @param string $package
+     */
+    public function setPackage($package)
+    {
+        $this->package = $package;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPackage()
+    {
+        return $this->package;
     }
 }
