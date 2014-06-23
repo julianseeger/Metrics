@@ -10,6 +10,11 @@ class Project
     private $name;
 
     /**
+     * @var Directory
+     */
+    private $root = null;
+
+    /**
      * @param string $name
      */
     public function __construct($name)
@@ -31,5 +36,22 @@ class Project
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param Directory $root
+     */
+    public function setRoot(Directory $root)
+    {
+        $this->root = $root;
+        $root->setParent();
+    }
+
+    /**
+     * @return Directory
+     */
+    public function getRoot()
+    {
+        return $this->root;
     }
 }
