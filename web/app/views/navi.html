@@ -36,7 +36,7 @@
       <li class="dropdown-header">{{ versions.length }} New Versions</li>
       <li class="message-preview" ng-repeat="version in versions | orderBy:'label':true">
         <a href="#">
-          <i class="fa fa-tag"></i> {{ version.label }} <span ng-if="$first" class="label label-success">latest</span>
+          <i class="fa fa-tag" ng-class="{'tag-active':$first}"></i> {{ version.label }} <span ng-if="$first" class="label label-success">latest</span>
         </a>
       </li>
       <li class="divider"></li>

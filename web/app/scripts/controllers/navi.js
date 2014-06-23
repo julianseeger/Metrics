@@ -8,7 +8,7 @@
  * Controller of the metricsApp
  */
 angular.module('metricsApp')
-  .controller('NaviCtl', ['$scope', '$location', '$modal', 'Api', 'ProjectScope', function ($scope, $location, $modal, Api, ProjectScope) {
+  .controller('NaviCtl', ['$scope', '$rootScope', '$location', '$modal', 'Api', 'ProjectScope', function ($scope, $rootScope, $location, $modal, Api, ProjectScope) {
     /** @type ApiService Api */
     $scope.projects = [];
     $scope.ProjectScope = ProjectScope;
@@ -27,17 +27,23 @@ angular.module('metricsApp')
       });
 
       modalInstance.result.then(function () {
-        $scope.reloadProjects();
+        $rootScope.$emit('projectsChange');
       });
     };
 
     $scope.selectProject = function (project) {
       ProjectScope.project = project;
-      $scope.versions = Api.getVersions(project);
+      $scope.reloadVersions();
+    };
+
+    $scope.reloadVersions = function() {
+      $scope.versions = Api.getVersions(ProjectScope.project);
     };
 
     $scope.reloadProjects = function() {
       $scope.projects = Api.getProjects();
     };
     $scope.reloadProjects();
+    $rootScope.$on('versionsChange', $scope.reloadVersions);
+    $rootScope.$on('projectsChange', $scope.reloadProjects);
   }]);

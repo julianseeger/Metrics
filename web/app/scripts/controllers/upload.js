@@ -8,7 +8,7 @@
  * Controller of the metricsApp
  */
 angular.module('metricsApp')
-  .controller('MaterialUploadCtl', ['$scope', '$upload', 'ProjectScope', function ($scope, $upload, ProjectScope) {
+  .controller('MaterialUploadCtl', ['$scope', '$rootScope', '$upload', 'ProjectScope', function ($scope, $rootScope, $upload, ProjectScope) {
     $scope.version = '';
     $scope.ProjectScope = ProjectScope;
 
@@ -34,6 +34,7 @@ angular.module('metricsApp')
         }).success(function(data, status, headers, config) {
           // file is uploaded successfully
           console.log(data);
+          $rootScope.$emit('versionsChange');
         });
         //.error(...)
         //.then(success, error, progress);
