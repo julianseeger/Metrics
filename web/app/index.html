@@ -5,6 +5,7 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+    <link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(app/..) styles/vendor.css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
@@ -13,7 +14,7 @@
     <!-- endbuild -->
     <!-- build:css({.tmp,app/..}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/sb-admin.css">
+    <link rel="stylesheet" href="styles/devoops.css">
     <link rel="stylesheet" href="styles/font-awesome.css">
     <!-- endbuild -->
   </head>
@@ -24,9 +25,8 @@
 
     <div id="wrapper">
 
-      <!-- Sidebar -->
-      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
+      <ng-include src="'views/navi.html'"></ng-include>
+      <!--nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -37,15 +37,30 @@
           <a class="navbar-brand" href="index.html">Metrics</a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse" ng-controller="NaviCtl">
           <ng-include src="'views/navi.html'"/>
-        </div><!-- /.navbar-collapse -->
-      </nav>
+        </div>
+      </nav-->
 
-    <div id="page-wrapper" ng-view="">
-      <i class="fa fa-spinner"></i>
-    </div>
+      <!--Start Container-->
+      <div id="main" class="container-fluid">
+        <div class="row">
+          <ng-include src="'views/sidebar.html'"></ng-include>
+          <!--Start Content-->
+          <div id="content" class="col-xs-12 col-sm-10">
+            <div class="row">
+              <div id="breadcrumb" class="col-xs-12">
+                <ol class="breadcrumb">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="#">Dashboard</a></li>
+                </ol>
+              </div>
+            </div>
+            <div id="ajax-content" ng-view=""></div>
+          </div>
+          <!--End Content-->
+        </div>
+      </div>
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -77,6 +92,7 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
+    <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

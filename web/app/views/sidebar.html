@@ -1,0 +1,49 @@
+<div id="sidebar-left" class="col-xs-2 col-sm-2" ng-controller="NaviCtl">
+  <ul class="nav main-menu">
+    <li ng-class="{active:isActive('/')}"><a ng-href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+
+    <li class="dropdown">
+      <a href="#" data-toggle="dropdown">
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">Charts</span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="ajax-link" href="ajax/charts_xcharts.html">xCharts</a></li>
+        <li><a class="ajax-link" href="ajax/charts_flot.html">Flot Charts</a></li>
+        <li><a class="ajax-link" href="ajax/charts_google.html">Google Charts</a></li>
+        <li><a class="ajax-link" href="ajax/charts_morris.html">Morris Charts</a></li>
+        <li><a class="ajax-link" href="ajax/charts_coindesk.html">CoinDesk realtime</a></li>
+      </ul>
+    </li>
+
+    <li ng-if="ProjectScope.project" ng-class="{active:isActive('/upload')}">
+      <a ng-href="#/upload"><i class="fa fa-cloud-upload"></i> Material Upload
+      </a>
+    </li>
+    <li ng-class="{active:isActive('/about')}"><a ng-href="#/about"><i class="fa fa-file"></i> About</a></li>
+  </ul>
+</div>
+
+
+<!--ul class="nav navbar-nav side-nav">
+  <li ng-class="{active:isActive('/')}"><a ng-href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+
+  <li ng-if="ProjectScope.project" ng-class="{active:isActive('/upload')}">
+    <a ng-href="#/upload"><i class="fa fa-cloud-upload"></i> Material Upload
+    </a>
+  </li>
+  <li ng-class="{active:isActive('/about')}"><a ng-href="#/about"><i class="fa fa-file"></i> About</a></li>
+</ul-->
+<script>
+  $(document).ready(function() {
+    $('.dropdown').on('show.bs.dropdown', function (e) {
+      console.log('asd');
+      $(this).find('.dropdown-menu').first().stop(true, true).slideDown('fast');
+    });
+
+    // ADD SLIDEUP ANIMATION TO DROPDOWN //
+    $('.dropdown').on('hide.bs.dropdown', function (e) {
+      $(this).find('.dropdown-menu').first().stop(true, true).slideUp('fast');
+    });
+  });
+</script>

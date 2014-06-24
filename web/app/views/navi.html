@@ -1,56 +1,123 @@
 
-<ul class="nav navbar-nav side-nav">
-  <li ng-class="{active:isActive('/')}"><a ng-href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+<!-- Sidebar -->
 
-  <li ng-if="ProjectScope.project" ng-class="{active:isActive('/upload')}">
-    <a ng-href="#/upload"><i class="fa fa-cloud-upload"></i> Material Upload
-    </a>
-  </li>
-  <li ng-class="{active:isActive('/about')}"><a ng-href="#/about"><i class="fa fa-file"></i> About</a></li>
-</ul>
-
-<ul class="nav navbar-nav navbar-right navbar-user">
-
-  <li class="dropdown alerts-dropdown" on-toggle="toggled(open)">
-    <a href="#" class="dropdown-toggle">
-      <i class="fa fa-github"></i> {{ ProjectScope.project ? ProjectScope.project.name : 'Projects' }}
-      <span class="badge" ng-if="!ProjectScope.project">{{ projects.length }}</span> <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-      <li ng-repeat="project in projects">
-        <a href="#" ng-click="selectProject(project)">
-          <i class="fa fa-github"></i> <b>{{ project.name }}</b>
-        </a>
-      </li>
-      <li class="divider"></li>
-      <li><a ng-click="addProject()" href="#"><i class="fa fa-plus"></i> Add Project</a></li>
-    </ul>
-  </li>
+<header class="navbar" ng-controller="NaviCtl">
+  <div class="container-fluid expanded-panel">
+    <div class="row">
+      <div id="logo" class="col-xs-12 col-sm-2">
+        <a href="index.html">Metrics</a>
+      </div>
+      <div id="top-panel" class="col-xs-12 col-sm-10">
+        <div class="row">
+          <div class="col-xs-8 col-sm-4">
+            <a href="#" class="show-sidebar">
+              <i class="fa fa-bars"></i>
+            </a>
+            <div id="search">
+              <input type="text" placeholder="search"/>
+              <i class="fa fa-search"></i>
+            </div>
+          </div>
 
 
-  <li class="dropdown messages-dropdown" ng-if="ProjectScope.project">
-    <a href="#" class="dropdown-toggle">
-      <i class="fa fa-tag"></i> Versions <span class="badge">{{ versions.length }}</span> <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-      <li class="dropdown-header">{{ versions.length }} New Versions</li>
-      <li class="message-preview" ng-repeat="version in versions | orderBy:'label':true">
-        <a href="#">
-          <i class="fa fa-tag" ng-class="{'tag-active':$first}"></i> {{ version.label }} <span ng-if="$first" class="label label-success">latest</span>
-        </a>
-      </li>
-      <li class="divider"></li>
-      <li><a href="#">View Inbox <span class="badge">7</span></a></li>
-    </ul>
-  </li>
-  <li class="dropdown user-dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
-    <ul class="dropdown-menu">
-      <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
-      <li><a href="#"><i class="fa fa-envelope"></i> Inbox <span class="badge">7</span></a></li>
-      <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
-      <li class="divider"></li>
-      <li><a href="#"><i class="fa fa-power-off"></i> Log Out</a></li>
-    </ul>
-  </li>
-</ul>
+          <div class="col-xs-4 col-sm-8 top-panel-right">
+            <ul class="nav navbar-nav pull-right panel-menu">
+              <!--li class="hidden-xs">
+                <a href="index.html" class="modal-link">
+                  <i class="fa fa-bell"></i>
+                  <span class="badge">7</span>
+                </a>
+              </li-->
+
+              <li class="dropdown alerts-dropdown" on-toggle="toggled(open)">
+                <a href="#" class="dropdown-toggle">
+                  <i class="fa fa-github"></i> {{ ProjectScope.project ? ProjectScope.project.name : 'Projects' }}
+                  <span class="badge" ng-if="!ProjectScope.project">{{ projects.length }}</span> <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li ng-repeat="project in projects">
+                    <a href="#" ng-click="selectProject(project)">
+                      <i class="fa fa-github"></i> <b>{{ project.name }}</b>
+                    </a>
+                  </li>
+                  <li class="divider"></li>
+                  <li><a ng-click="addProject()" href="#"><i class="fa fa-plus"></i> Add Project</a></li>
+                </ul>
+              </li>
+
+
+              <li class="dropdown messages-dropdown" ng-if="ProjectScope.project">
+                <a href="#" class="dropdown-toggle">
+                  <i class="fa fa-tag"></i> Versions <span class="badge">{{ versions.length }}</span> <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-header">{{ versions.length }} New Versions</li>
+                  <li class="message-preview" ng-repeat="version in versions | orderBy:'label':true">
+                    <a href="#">
+                      <i class="fa fa-tag" ng-class="{'tag-active':$first}"></i> {{ version.label }} <span ng-if="$first" class="label label-success">latest</span>
+                    </a>
+                  </li>
+                  <li class="divider"></li>
+                  <li><a href="#">View Inbox <span class="badge">7</span></a></li>
+                </ul>
+              </li>
+
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle account">
+                  <div class="avatar">
+                    <i class="fa fa-user"></i>
+                  </div>
+                  <i class="fa fa-angle-down pull-right"></i>
+                  <div class="user-mini pull-right">
+                    <span class="welcome">Welcome,</span>
+                    <span>Jane Devoops</span>
+                  </div>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-user"></i>
+                      <span class="hidden-sm text">Profile</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="ajax/page_messages.html" class="ajax-link">
+                      <i class="fa fa-envelope"></i>
+                      <span class="hidden-sm text">Messages</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="ajax/gallery_simple.html" class="ajax-link">
+                      <i class="fa fa-picture-o"></i>
+                      <span class="hidden-sm text">Albums</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="ajax/calendar.html" class="ajax-link">
+                      <i class="fa fa-tasks"></i>
+                      <span class="hidden-sm text">Tasks</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-cog"></i>
+                      <span class="hidden-sm text">Settings</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-power-off"></i>
+                      <span class="hidden-sm text">Logout</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!--End Header-->
+
