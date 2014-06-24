@@ -56,4 +56,18 @@ class VersionRepositoryMock implements VersionRepository
         $this->versions[$project->getName() . "-" . $label] = $version;
         return $version;
     }
+
+    /**
+     * @param Project $project
+     * @return Version
+     */
+    public function findLatest(Project $project)
+    {
+        $versions = $this->findAll($project);
+        $version = null;
+        foreach ($versions as $v) {
+            $version = $v;
+        }
+        return $version;
+    }
 }

@@ -78,4 +78,18 @@ class FileVersionRepository extends AbstractFileRepository implements VersionRep
         parent::save($versions);
         return $version;
     }
+
+    /**
+     * @param Project $project
+     * @return Version
+     */
+    public function findLatest(Project $project)
+    {
+        $versions = $this->load();
+        $version = null;
+        foreach ($versions as $v) {
+            $version = $v;
+        }
+        return $version;
+    }
 }

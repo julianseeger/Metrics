@@ -28,4 +28,10 @@ interface VersionRepository
      * @return Version
      */
     public function create(Project $project, $label);
+
+    /**
+     * @param Project $project
+     * @return Version
+     */
+    public function findLatest(Project $project);
 }
