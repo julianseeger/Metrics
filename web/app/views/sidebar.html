@@ -16,6 +16,10 @@
       </ul>
     </li>
 
+    <li ng-if="ProjectScope.project" ng-class="{active:isActive('/file')}">
+      <a ng-href="#/file"><i class="fa fa-folder-open"></i> Files
+      </a>
+    </li>
     <li ng-if="ProjectScope.project" ng-class="{active:isActive('/upload')}">
       <a ng-href="#/upload"><i class="fa fa-cloud-upload"></i> Material Upload
       </a>
@@ -37,7 +41,6 @@
 <script>
   $(document).ready(function() {
     $('.dropdown').on('show.bs.dropdown', function (e) {
-      console.log('asd');
       $(this).find('.dropdown-menu').first().stop(true, true).slideDown('fast');
     });
 

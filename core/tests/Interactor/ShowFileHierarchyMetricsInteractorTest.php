@@ -69,6 +69,7 @@ class ShowFileHierarchyMetricsInteractorTest extends \PHPUnit_Framework_TestCase
         $this->presenter = new ArrayBasedShowFileHierarchyMetricsPresenter();
 
         $this->interactor = new ShowFileHierarchyMetricsInteractor(
+            $this->projectRepository,
             $this->versionRepository,
             $this->fileVersionRepository,
             $this->metricsRepository,
@@ -78,7 +79,7 @@ class ShowFileHierarchyMetricsInteractorTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnsFileHierarchy()
     {
-        $result = $this->interactor->execute($this->project);
+        $result = $this->interactor->execute($this->project->getName());
         $expectedResult = [
             'label' => '1.0',
             'root' => [

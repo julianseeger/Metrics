@@ -30,6 +30,10 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/file', {
+        templateUrl: 'views/file.html',
+        controller: 'FileCtl'
+      })
       .when('/upload', {
         templateUrl: 'views/upload.html',
         controller: 'MaterialUploadCtl'

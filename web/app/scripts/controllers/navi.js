@@ -33,6 +33,7 @@ angular.module('metricsApp')
 
     $scope.selectProject = function (project) {
       ProjectScope.project = project;
+      $rootScope.$emit('projectsChange');
       $scope.reloadVersions();
     };
 

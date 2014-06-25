@@ -12,6 +12,7 @@ function ApiService($resource) {
   this.projects = [];
   this.projectsApi = $resource(this.url + 'projects', {});
   this.versionsApi = $resource(this.url + 'versions/:project', {project: '@project'});
+  this.fileMetricsApi = $resource(this.url + 'metrics/file/:project', {project: '@project'});
 
   /** @type Project project */
   this.addProject = function(project) {
@@ -27,6 +28,10 @@ function ApiService($resource) {
 
   this.getVersions = function(project) {
     return this.versionsApi.query({project: project.name});
+  };
+
+  this.getFileMetrics = function(project) {
+    return this.fileMetricsApi.get({project: project.name});
   };
 
   this.reloadProjects = function() {

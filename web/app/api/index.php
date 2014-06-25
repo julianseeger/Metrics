@@ -60,6 +60,26 @@ $app->post(
         return new Response('', 201);
     }
 );
+$app->get(
+    '/metrics/file/{project}',
+    function ($project) use ($repositoryFactory) {
+        $projectRepository = $repositoryFactory->getProjectRepository();
+        $versionRepository = $repositoryFactory->getVersionRepository();
+        $fileVersionRepository = $repositoryFactory->getFileVersionRepository();
+        $metricsRepository = $repositoryFactory->getMetricsRepository();
+        $presenter = new \Metrics\Web\Presenter\JsonShowFileHierarchyMetricsPresenter();
+
+        $interactor = new \Metrics\Core\Interactor\ShowFileHierarchyMetricsInteractor(
+            $projectRepository,
+            $versionRepository,
+            $fileVersionRepository,
+            $metricsRepository,
+            $presenter
+        );
+
+        return $interactor->execute($project);
+    }
+);
 $app->post(
     '/material/{project}/{version}/{materialType}',
     function (Request $request, $project, $version, $materialType) use ($repositoryFactory) {

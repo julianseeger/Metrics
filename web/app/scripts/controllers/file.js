@@ -1,0 +1,47 @@
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name metricsApp.controller:FileCtl
+ * @description
+ * # FileCtl
+ * Controller of the metricsApp
+ */
+angular.module('metricsApp')
+  .controller('FileCtl', ['$scope', '$rootScope', 'Api', 'ProjectScope', function ($scope, $rootScope, Api, ProjectScope) {
+
+    $scope.reloadFiles = function () {
+      $scope.version = Api.getFileMetrics(ProjectScope.project);
+      $scope.version.$promise.then(function (version) {
+        $scope.dir = $scope.version.root;
+        $scope.parents = [];
+      });
+    };
+
+    if (ProjectScope.project) {
+      $scope.reloadFiles();
+    }
+
+    $scope.selectDir = function(file) {
+      if (!file.isDir) {
+        return;
+      }
+      $scope.parents.push($scope.dir);
+      $scope.dir = file;
+      if (file.isDir && file.files.length == 1) {
+        var nextDir = file.files.pop();
+        file.files.push(nextDir);
+        $scope.selectDir(nextDir);
+      }
+    };
+
+    $scope.selectParentDir = function() {
+      $scope.dir = $scope.parents.pop();
+      if (!$scope.dir) {
+        $scope.dir = $scope.version.root;
+      }
+    };
+
+
+    $rootScope.$on('projectsChange', $scope.reloadFiles);
+  }]);
