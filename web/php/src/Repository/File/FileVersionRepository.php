@@ -85,10 +85,13 @@ class FileVersionRepository extends AbstractFileRepository implements VersionRep
      */
     public function findLatest(Project $project)
     {
+        /** @var Version[] $versions */
         $versions = $this->load();
         $version = null;
         foreach ($versions as $v) {
-            $version = $v;
+            if ($v->getProject()->getName() === $project->getName()) {
+                $version = $v;
+            }
         }
         return $version;
     }

@@ -44,9 +44,12 @@
               </progressbar>
             </td>
             <td>
-              <progressbar max="1" value="getMetricForLastVersion(file, 'coverage')" type="success">
-                {{ getMetricForLastVersion(file, 'coverage') * 100 | number: 1 }} %
-              </progressbar>
+              <progress max="1">
+                <bar value="getMetric(file, 'coverage')" type="primary" ng-hide="getMetricDiff(file,'coverage')>0"></bar>
+                <bar value="getMetricForLastVersion(file, 'coverage')" type="primary" ng-hide="getMetricDiff(file,'coverage')<=0"></bar>
+                <bar value="getMetricDiff(file, 'coverage')" type="success" ng-hide="getMetricDiff(file,'coverage')<=0"></bar>
+                <bar value="-1*getMetricDiff(file, 'coverage')" type="danger" ng-hide="getMetricDiff(file,'coverage')>0"></bar>
+              </progress>
             </td>
             <td>
               <span class="label" ng-class="{'label-success':(getMetricDiff(file, 'coverage')>0),'label-danger':(getMetricDiff(file, 'coverage') < 0),'label-default':(getMetricDiff(file, 'coverage') == 0)}">

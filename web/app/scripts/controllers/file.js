@@ -51,13 +51,22 @@ angular.module('metricsApp')
     };
 
     $scope.getMetricForLastVersion = function(file, metric) {
+      if ($scope.lastVersion === undefined) {
+        return 0;
+      }
       if ($scope.lastVersion.metrics === undefined) {
+        return 0;
+      }
+      if ($scope.lastVersion.metrics[file.path] === undefined) {
         return 0;
       }
       return $scope.lastVersion.metrics[file.path][metric];
     };
 
     $scope.getMetric = function(file, metric) {
+      if ($scope.version.metrics === undefined) {
+        return 0;
+      }
       return $scope.version.metrics[file.path][metric];
     };
 
