@@ -11,6 +11,14 @@ angular.module('metricsApp')
   .controller('FileCtl', ['$scope', '$rootScope', 'Api', 'ProjectScope', function ($scope, $rootScope, Api, ProjectScope) {
 
     $scope.reloadFiles = function () {
+      Api.getVersions(ProjectScope.project).$promise.then(function(versions){
+        versions.sort(function(versionA, versionB) {
+          return versionA.label > versionB.label ? 1 : -1;
+        });
+        versions.pop();
+        var lastVersion = versions.pop();
+        $scope.lastVersion = Api.getFileMetricsByVersion(ProjectScope.project, lastVersion);
+      });
       $scope.version = Api.getFileMetrics(ProjectScope.project);
       $scope.version.$promise.then(function (version) {
         $scope.dir = $scope.version.root;
@@ -43,5 +51,5 @@ angular.module('metricsApp')
     };
 
 
-    $rootScope.$on('projectsChange', $scope.reloadFiles);
+    $rootScope.$on('projectChange', $scope.reloadFiles);
   }]);

@@ -28,6 +28,9 @@
             <th>#</th>
             <th>Name</th>
             <th>Path</th>
+            <th>Coverage</th>
+            <th>Last</th>
+            <th>Diff</th>
           </tr>
           </thead>
           <tbody>
@@ -35,6 +38,22 @@
             <td><i class="fa" ng-class="{'fa-folder':file.isDir ,'fa-file-o':!file.isDir}"></i></td>
             <td><a ng-click="selectDir(file)">{{ file.name }}</a></td>
             <td>{{ file.path }}</td>
+            <td>
+              <progressbar max="1" value="version.metrics[file.path].coverage" type="success">
+                {{ version.metrics[file.path].coverage * 100 | number: 1 }} %
+              </progressbar>
+            </td>
+            <td>
+              <progressbar max="1" value="lastVersion.metrics[file.path].coverage" type="success">
+                {{ lastVersion.metrics[file.path].coverage * 100 | number: 1 }} %
+              </progressbar>
+            </td>
+            <td></td>
+            <td>
+              <span class="label" ng-class="{'label-success':(version.metrics[file.path].coverage - lastVersion.metrics[file.path].coverage>0),'label-danger':(version.metrics[file.path].coverage - lastVersion.metrics[file.path].coverage < 0)}">
+                {{ (version.metrics[file.path].coverage - lastVersion.metrics[file.path].coverage) * 100 | number: 1 }} %
+              </span>
+            </td>
           </tr>
           </tbody>
         </table>

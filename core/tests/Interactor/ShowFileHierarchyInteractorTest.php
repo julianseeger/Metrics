@@ -4,7 +4,7 @@ namespace Metrics\Core\Interactor;
 
 use Metrics\Core\Entity\Project;
 use Metrics\Core\Entity\Version;
-use Metrics\Core\Presenter\ArrayBased\ArrayBasedShowFileHierarchyMetricsPresenter;
+use Metrics\Core\Presenter\ArrayBased\ArrayBasedShowFileHierarchyPresenter;
 use Metrics\Core\Repository\FileVersionRepository;
 use Metrics\Core\Repository\FileVersionRepositoryMock;
 use Metrics\Core\Repository\MetricRepository;
@@ -14,7 +14,7 @@ use Metrics\Core\Repository\ProjectRepositoryMock;
 use Metrics\Core\Repository\VersionRepository;
 use Metrics\Core\Repository\VersionRepositoryMock;
 
-class ShowFileHierarchyMetricsInteractorTest extends \PHPUnit_Framework_TestCase
+class ShowFileHierarchyInteractorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var FileVersionRepository
@@ -47,7 +47,7 @@ class ShowFileHierarchyMetricsInteractorTest extends \PHPUnit_Framework_TestCase
     private $latestVersion;
 
     /**
-     * @var ShowFileHierarchyMetricsInteractor
+     * @var ShowFileHierarchyInteractor
      */
     private $interactor;
 
@@ -64,11 +64,16 @@ class ShowFileHierarchyMetricsInteractorTest extends \PHPUnit_Framework_TestCase
 
         $this->project = $this->projectRepository->create('testproject');
         $this->latestVersion = $this->versionRepository->create($this->project, '1.0');
-        $this->fileVersionRepository->createFile('/src/Entities/SomeEntity.php', $this->latestVersion);
+        $file = $this->fileVersionRepository->createFile('/src/Entities/SomeEntity.php', $this->latestVersion);
+        $file->addMetricValue($this->metricsRepository->getMetric('coverage'), '0.9');
+        $statements = $this->metricsRepository->getMetric('statements');
+        $statements->setInternal(true);
+        $this->metricsRepository->save($statements);
+        $file->addMetricValue($statements, '10');
 
-        $this->presenter = new ArrayBasedShowFileHierarchyMetricsPresenter();
+        $this->presenter = new ArrayBasedShowFileHierarchyPresenter();
 
-        $this->interactor = new ShowFileHierarchyMetricsInteractor(
+        $this->interactor = new ShowFileHierarchyInteractor(
             $this->projectRepository,
             $this->versionRepository,
             $this->fileVersionRepository,
@@ -107,6 +112,11 @@ class ShowFileHierarchyMetricsInteractorTest extends \PHPUnit_Framework_TestCase
                         ]
                     ]
                 ]
+            ],
+            'metrics' => [
+                '/src' => ['coverage' => '0.9'],
+                '/src/Entities' => ['coverage' => '0.9'],
+                '/src/Entities/SomeEntity.php' => ['coverage' => '0.9'],
             ]
         ];
 

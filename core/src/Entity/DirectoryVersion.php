@@ -47,4 +47,9 @@ class DirectoryVersion extends Directory
 
         return $this->metricValues[$metric->getName()];
     }
+
+    public function getMetricValues()
+    {
+        return $this->metricValues;
+    }
 }

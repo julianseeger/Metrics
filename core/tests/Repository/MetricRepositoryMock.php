@@ -6,12 +6,33 @@ use Metrics\Core\Entity\Metric;
 
 class MetricRepositoryMock implements MetricRepository
 {
+    private $metrics = [];
+
     /**
      * @param string $name
      * @return Metric
      */
     public function getMetric($name)
     {
-        return new Metric($name);
+        if (!isset($this->metrics[$name])) {
+            $this->metrics[$name] = new Metric($name);
+        }
+        return $this->metrics[$name];
+    }
+
+    /**
+     * @param Metric $metric
+     */
+    public function save(Metric $metric)
+    {
+        $this->metrics[$metric->getName()] = $metric;
+    }
+
+    /**
+     * @return Metric[]
+     */
+    public function getMetrics()
+    {
+        return $this->metrics;
     }
 }

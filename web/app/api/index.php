@@ -67,9 +67,9 @@ $app->get(
         $versionRepository = $repositoryFactory->getVersionRepository();
         $fileVersionRepository = $repositoryFactory->getFileVersionRepository();
         $metricsRepository = $repositoryFactory->getMetricsRepository();
-        $presenter = new \Metrics\Web\Presenter\JsonShowFileHierarchyMetricsPresenter();
+        $presenter = new \Metrics\Web\Presenter\JsonShowFileHierarchyPresenter();
 
-        $interactor = new \Metrics\Core\Interactor\ShowFileHierarchyMetricsInteractor(
+        $interactor = new \Metrics\Core\Interactor\ShowFileHierarchyInteractor(
             $projectRepository,
             $versionRepository,
             $fileVersionRepository,
@@ -78,6 +78,26 @@ $app->get(
         );
 
         return $interactor->execute($project);
+    }
+);
+$app->get(
+    '/metrics/file/{project}/{version}',
+    function ($project, $version) use ($repositoryFactory) {
+        $projectRepository = $repositoryFactory->getProjectRepository();
+        $versionRepository = $repositoryFactory->getVersionRepository();
+        $fileVersionRepository = $repositoryFactory->getFileVersionRepository();
+        $metricsRepository = $repositoryFactory->getMetricsRepository();
+        $presenter = new \Metrics\Web\Presenter\JsonShowFileHierarchyPresenter();
+
+        $interactor = new \Metrics\Core\Interactor\ShowFileHierarchyInteractor(
+            $projectRepository,
+            $versionRepository,
+            $fileVersionRepository,
+            $metricsRepository,
+            $presenter
+        );
+
+        return $interactor->execute($project, $version);
     }
 );
 $app->post(

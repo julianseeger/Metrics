@@ -11,4 +11,14 @@ interface MetricRepository
      * @return Metric
      */
     public function getMetric($name);
+
+    /**
+     * @param Metric $metric
+     */
+    public function save(Metric $metric);
+
+    /**
+     * @return Metric[]
+     */
+    public function getMetrics();
 }

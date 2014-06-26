@@ -46,6 +46,7 @@ class CloverSensor implements Sensor
 
     public function execute($cloverXml, Project $project, Version $version)
     {
+        $this->registerMetrics();
         $xml = simplexml_load_string($cloverXml);
         $coverage = Coverage::parse($xml);
 
@@ -169,5 +170,23 @@ class CloverSensor implements Sensor
     public function supportsMaterialType(MaterialType $materialType)
     {
         return $materialType->getName() === 'clover';
+    }
+
+    private function registerMetrics()
+    {
+        $coverage = $this->metricRepository->getMetric('coverage');
+        $coverage->setInternal(false);
+        $coverage->setPercentaged(true);
+        $this->metricRepository->save($coverage);
+
+        $statements = $this->metricRepository->getMetric('statements');
+        $statements->setInternal(true);
+        $statements->setPercentaged(false);
+        $this->metricRepository->save($statements);
+
+        $coveredstatements = $this->metricRepository->getMetric('coveredstatements');
+        $coveredstatements->setInternal(true);
+        $coveredstatements->setPercentaged(false);
+        $this->metricRepository->save($coveredstatements);
     }
 }

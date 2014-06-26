@@ -15,6 +15,16 @@ class Metric
     private $name;
 
     /**
+     * @var bool
+     */
+    private $percentaged = false;
+
+    /**
+     * @var bool
+     */
+    private $internal = false;
+
+    /**
      * @param string $name
      */
     public function __construct($name)
@@ -28,5 +38,37 @@ class Metric
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param bool $percentaged
+     */
+    public function setPercentaged($percentaged = true)
+    {
+        $this->percentaged = $percentaged;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPercentaged()
+    {
+        return $this->percentaged;
+    }
+
+    /**
+     * @param bool $internal
+     */
+    public function setInternal($internal = true)
+    {
+        $this->internal = $internal;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInternal()
+    {
+        return $this->internal;
     }
 }

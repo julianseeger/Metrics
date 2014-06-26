@@ -3,13 +3,13 @@
 namespace Metrics\Core\Interactor;
 
 use Metrics\Core\Entity\Project;
-use Metrics\Core\Presenter\ShowFileHierarchyMetricsPresenter;
+use Metrics\Core\Presenter\ShowFileHierarchyPresenter;
 use Metrics\Core\Repository\FileVersionRepository;
 use Metrics\Core\Repository\MetricRepository;
 use Metrics\Core\Repository\ProjectRepository;
 use Metrics\Core\Repository\VersionRepository;
 
-class ShowFileHierarchyMetricsInteractor
+class ShowFileHierarchyInteractor
 {
     /**
      * @var FileVersionRepository
@@ -32,7 +32,7 @@ class ShowFileHierarchyMetricsInteractor
     private $projectRepository;
 
     /**
-     * @var ShowFileHierarchyMetricsPresenter
+     * @var ShowFileHierarchyPresenter
      */
     private $presenter;
 
@@ -41,14 +41,14 @@ class ShowFileHierarchyMetricsInteractor
      * @param VersionRepository $versionRepository
      * @param FileVersionRepository $fileVersionRepository
      * @param MetricRepository $metricsRepository
-     * @param ShowFileHierarchyMetricsPresenter $presenter
+     * @param ShowFileHierarchyPresenter $presenter
      */
     public function __construct(
         ProjectRepository $projectRepository,
         VersionRepository $versionRepository,
         FileVersionRepository $fileVersionRepository,
         MetricRepository $metricsRepository,
-        ShowFileHierarchyMetricsPresenter $presenter
+        ShowFileHierarchyPresenter $presenter
     ) {
         $this->projectRepository = $projectRepository;
         $this->versionRepository = $versionRepository;
@@ -59,12 +59,18 @@ class ShowFileHierarchyMetricsInteractor
 
     /**
      * @param string $project
+     * @param null $version
      * @return mixed
      */
-    public function execute($project)
+    public function execute($project, $version = null)
     {
         $project = $this->projectRepository->findOne($project);
-        $version = $this->versionRepository->findLatest($project);
-        return $this->presenter->present($version);
+        if ($version == null) {
+            $version = $this->versionRepository->findLatest($project);
+        } else {
+            $version = $this->versionRepository->findOne($project, $version);
+        }
+        $metrics = $this->metricsRepository->getMetrics();
+        return $this->presenter->present($version, $metrics);
     }
 }

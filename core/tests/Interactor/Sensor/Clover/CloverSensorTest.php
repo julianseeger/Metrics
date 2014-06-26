@@ -173,4 +173,35 @@ class CloverSensorTest extends \PHPUnit_Framework_TestCase
         $file = $version->getRoot()->getFile('BwsShop');
         $this->assertEquals(0.714, $file->getMetricValue(new Metric(Metric::LINE_COVERAGE)), "fail", 0.001);
     }
+
+    public function testRegistersItsMetrics()
+    {
+        $project = new Project('testproject');
+        $versionRepository = new VersionRepositoryMock();
+        $version = $versionRepository->create($project, "0.1");
+        $fileRepository = new FileRepositoryMock();
+        $fileVersionRepository = new FileVersionRepositoryMock();
+        $metricRepository = new MetricRepositoryMock();
+        $sensor = new CloverSensor($fileRepository, $fileVersionRepository, $metricRepository);
+
+        $sensor->execute(self::FIXTURE, $project, $version);
+
+        $metrics = $metricRepository->getMetrics();
+        $this->assertEquals(3, count($metrics));
+        $this->assertTrue(isset($metrics['coverage']));
+        $this->assertTrue(isset($metrics['statements']));
+        $this->assertTrue(isset($metrics['coveredstatements']));
+
+        $coverage = $metrics['coverage'];
+        $this->assertTrue($coverage->isPercentaged());
+        $this->assertFalse($coverage->isInternal());
+
+        $statements = $metrics['statements'];
+        $this->assertFalse($statements->isPercentaged());
+        $this->assertTrue($statements->isInternal());
+
+        $coveredstatements = $metrics['coveredstatements'];
+        $this->assertFalse($coveredstatements->isPercentaged());
+        $this->assertTrue($coveredstatements->isInternal());
+    }
 }

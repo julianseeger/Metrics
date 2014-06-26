@@ -56,6 +56,6 @@ class FileRepositoryFactory extends AbstractRepositoryFactory implements Reposit
      */
     public function getMetricsRepository()
     {
-        return new MetricRepositoryMock();
+        return new FileMetricRepository($this->directory);
     }
 }
