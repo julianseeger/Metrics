@@ -39,19 +39,19 @@
             <td><a ng-click="selectDir(file)">{{ file.name }}</a></td>
             <td>{{ file.path }}</td>
             <td>
-              <progressbar max="1" value="version.metrics[file.path].coverage" type="success">
-                {{ version.metrics[file.path].coverage * 100 | number: 1 }} %
+              <progressbar max="1" value="getMetric(file, 'coverage')" type="success">
+                {{ getMetric(file, 'coverage') * 100 | number: 1 }} %
               </progressbar>
             </td>
             <td>
-              <progressbar max="1" value="lastVersion.metrics[file.path].coverage" type="success">
-                {{ lastVersion.metrics[file.path].coverage * 100 | number: 1 }} %
+              <progressbar max="1" value="getMetricForLastVersion(file, 'coverage')" type="success">
+                {{ getMetricForLastVersion(file, 'coverage') * 100 | number: 1 }} %
               </progressbar>
             </td>
-            <td></td>
             <td>
-              <span class="label" ng-class="{'label-success':(version.metrics[file.path].coverage - lastVersion.metrics[file.path].coverage>0),'label-danger':(version.metrics[file.path].coverage - lastVersion.metrics[file.path].coverage < 0)}">
-                {{ (version.metrics[file.path].coverage - lastVersion.metrics[file.path].coverage) * 100 | number: 1 }} %
+              <span class="label" ng-class="{'label-success':(getMetricDiff(file, 'coverage')>0),'label-danger':(getMetricDiff(file, 'coverage') < 0),'label-default':(getMetricDiff(file, 'coverage') == 0)}">
+                <i class="fa" ng-class="{'fa-arrow-up':(getMetricDiff(file, 'coverage')>0),'fa-arrow-down':(getMetricDiff(file, 'coverage')<0),'fa-arrow-left':(getMetricDiff(file, 'coverage')==0)}"></i>
+                {{ getMetricDiff(file, 'coverage') * 100 | number: 1 }} %
               </span>
             </td>
           </tr>

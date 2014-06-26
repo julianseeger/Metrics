@@ -50,6 +50,20 @@ angular.module('metricsApp')
       }
     };
 
+    $scope.getMetricForLastVersion = function(file, metric) {
+      if ($scope.lastVersion.metrics === undefined) {
+        return 0;
+      }
+      return $scope.lastVersion.metrics[file.path][metric];
+    };
+
+    $scope.getMetric = function(file, metric) {
+      return $scope.version.metrics[file.path][metric];
+    };
+
+    $scope.getMetricDiff = function(file, metric) {
+      return $scope.getMetric(file, metric) - $scope.getMetricForLastVersion(file, metric);
+    };
 
     $rootScope.$on('projectChange', $scope.reloadFiles);
   }]);
