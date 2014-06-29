@@ -34,13 +34,17 @@ class VersionRepositoryMock implements VersionRepository
         $this->versions[$version->getProject()->getName() . '-' . $version->getLabel()];
     }
 
-    public function findAll(Project $project)
+    public function findAll(Project $project, $limit = null)
     {
         $results = [];
         foreach ($this->versions as $version) {
             if ($version->getProject() === $project) {
                 $results[] = $version;
             }
+        }
+
+        if ($limit !== null && count($results) > $limit) {
+            $results = array_slice($results, count($results) - $limit);
         }
         return $results;
     }

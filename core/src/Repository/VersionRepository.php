@@ -16,9 +16,10 @@ interface VersionRepository
 
     /**
      * @param Project $project
+     * @param int|null $limit
      * @return Version[]
      */
-    public function findAll(Project $project);
+    public function findAll(Project $project, $limit = null);
 
     public function save(Version $version);
 

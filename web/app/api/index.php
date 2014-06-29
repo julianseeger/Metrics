@@ -81,6 +81,24 @@ $app->get(
     }
 );
 $app->get(
+    '/timeseries/{project}/{metric}',
+    function ($project, $metric) use ($repositoryFactory) {
+        $projectRepository = $repositoryFactory->getProjectRepository();
+        $versionRepository = $repositoryFactory->getVersionRepository();
+        $metricsRepository = $repositoryFactory->getMetricsRepository();
+        $presenter = new \Metrics\Web\Presenter\JsonShowTimeSeriesPresenter();
+
+        $interactor = new \Metrics\Core\Interactor\ShowTimeSeriesInteractor(
+            $projectRepository,
+            $versionRepository,
+            $metricsRepository,
+            $presenter
+        );
+
+        return $interactor->execute($project, $metric);
+    }
+);
+$app->get(
     '/metrics/file/{project}/{version}',
     function ($project, $version) use ($repositoryFactory) {
         $projectRepository = $repositoryFactory->getProjectRepository();

@@ -50,9 +50,10 @@ class FileVersionRepository extends AbstractFileRepository implements VersionRep
 
     /**
      * @param Project $project
+     * @param int|null $limit
      * @return Version[]
      */
-    public function findAll(Project $project)
+    public function findAll(Project $project, $limit = null)
     {
         $result = [];
         /** @var Version[] $versions */
@@ -61,6 +62,9 @@ class FileVersionRepository extends AbstractFileRepository implements VersionRep
             if ($version->getProject()->getName() == $project->getName()) {
                 $result[] = $version;
             }
+        }
+        if ($limit !== null && count($result) > $limit) {
+            $result = array_slice($result, count($result) - $limit);
         }
         return $result;
     }
