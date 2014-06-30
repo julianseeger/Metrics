@@ -3,6 +3,7 @@
     <dirname property="composer.basedir" file="${ant.file.composer}"/>
     <target name="init" unless="composer.properties">
         <property name="composer.file" value="composer.properties" />
+        <property name="composer.phar" value="${composer.basedir}/composer.phar" />
         <property name="composer.properties" location="${composer.basedir}/${composer.file}" />
         <property file="${composer.properties}" />
         <echo message="using composer properties from ${composer.properties}" level="debug"/>

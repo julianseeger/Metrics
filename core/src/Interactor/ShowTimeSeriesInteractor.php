@@ -65,6 +65,6 @@ class ShowTimeSeriesInteractor
             $result->addValue($version, $value);
         }
 
-        return $result;
+        return $this->presenter->present($result);
     }
 }
