@@ -42,7 +42,6 @@ angular.module('metricsApp')
     };
 
     $rootScope.$on('projectChange', $scope.reloadChart);
-    $('#container').highcharts($scope.options);
 
     if (ProjectScope.project) {
       $scope.reloadChart();
