@@ -25,6 +25,7 @@
   },
   "appPath": "app",
   "resolutions": {
-    "angular": ">=1"
+    "angular": ">=1",
+    "es5-shim": "~3.1.0"
   }
 }
