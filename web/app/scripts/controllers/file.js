@@ -9,13 +9,15 @@
  */
 angular.module('metricsApp')
   .controller('FileCtl', ['$scope', '$rootScope', 'Api', 'ProjectScope', function ($scope, $rootScope, Api, ProjectScope) {
-
-    $scope.metric = 'coverage';
-
-    $scope.setMetric = function (metric) {
-      $scope.metric = metric;
-      console.log(metric);
+    $scope.metrics = {
+      'coverage': {name: 'coverage', isPercentaged: true, moreIsBetter: true},
+      'PHPCS Violations': {name: 'PHPCS Violations', isPercentaged: false, moreIsBetter: false}
     };
+
+    $scope.setMetricByName = function (metricName) {
+      $scope.metric = $scope.metrics[metricName];
+    };
+    $scope.setMetricByName('coverage');
 
     $scope.reloadFiles = function () {
       Api.getVersions(ProjectScope.project).$promise.then(function(versions){
@@ -67,14 +69,14 @@ angular.module('metricsApp')
       if ($scope.lastVersion.metrics[file.path] === undefined) {
         return 0;
       }
-      return $scope.lastVersion.metrics[file.path][metric];
+      return $scope.lastVersion.metrics[file.path][metric.name];
     };
 
     $scope.getMetric = function(file, metric) {
       if ($scope.version.metrics === undefined) {
         return 0;
       }
-      return $scope.version.metrics[file.path][metric];
+      return $scope.version.metrics[file.path][metric.name];
     };
 
     $scope.getMetricDiff = function(file, metric) {

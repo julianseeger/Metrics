@@ -1,9 +1,11 @@
 <div class="row-fluid">
   <div id="dashboard_links" class="col-xs-12 col-sm-2 pull-right">
     <ul class="nav nav-pills nav-stacked">
-      <li ng-class="{active:(metric=='coverage')}"><a ng-click="setMetric('coverage')" class="tab-link" id="coverage">Coverage</a>
+      <li ng-class="{active:(metric.name=='coverage')}"><a ng-click="setMetricByName('coverage')" class="tab-link"
+                                                           id="coverage">Coverage</a>
       </li>
-      <li ng-class="{active:(metric=='PHPCS Violations')}"><a ng-click="setMetric('PHPCS Violations')" class="tab-link"
+      <li ng-class="{active:(metric.name=='PHPCS Violations')}"><a ng-click="setMetricByName('PHPCS Violations')"
+                                                                   class="tab-link"
                                                               id="phpcs">PHPCS Violations</a></li>
     </ul>
   </div>
@@ -36,8 +38,7 @@
             <th>#</th>
             <th>Name</th>
             <th>Path</th>
-            <th>Coverage</th>
-            <th>Last</th>
+            <th>Current</th>
             <th>Diff</th>
           </tr>
           </thead>
@@ -47,25 +48,19 @@
             <td><a ng-click="selectDir(file)">{{ file.name }}</a></td>
             <td>{{ file.path }}</td>
             <td>
-              <progressbar max="1" value="getMetric(file, metric)" type="success">
-                {{ getMetric(file, metric) * 100 | number: 1 }} %
+              <progressbar max="1" value="getMetric(file, metric)" type="success" ng-if="metric.isPercentaged">
+                {{ getMetric(file, metric) | metricvalue:metric }}
               </progressbar>
+              <span class="label" ng-if="!metric.isPercentaged"
+                    ng-class="{'label-default':(getMetric(file, metric) == 0),'label-danger':(getMetric(file, metric) > 0)}">
+                {{ getMetric(file, metric) | metricvalue:metric }}
+              </span>
             </td>
             <td>
-              <progress max="1">
-                <bar value="getMetric(file, metric)" type="primary" ng-show="getMetricDiff(file,metric)<=0"></bar>
-                <bar value="getMetricForLastVersion(file, metric)" type="primary"
-                     ng-show="getMetricDiff(file,metric)>0"></bar>
-                <bar value="getMetricDiff(file, metric)" type="success" ng-show="getMetricDiff(file,metric)>0"></bar>
-                <bar value="-1*getMetricDiff(file, metric)" type="danger" ng-show="getMetricDiff(file,metric)<=0"></bar>
-              </progress>
-            </td>
-            <td>
-              <span class="label"
-                    ng-class="{'label-success':(getMetricDiff(file, metric)>0),'label-danger':(getMetricDiff(file, metric) < 0),'label-default':(getMetricDiff(file, metric) == 0)}">
+              <span class="label {{ getMetricDiff(file, metric)|metriclabel:metric }}">
                 <i class="fa"
                    ng-class="{'fa-arrow-up':(getMetricDiff(file, metric)>0),'fa-arrow-down':(getMetricDiff(file, metric)<0),'fa-arrow-left':(getMetricDiff(file, metric)==0)}"></i>
-                {{ getMetricDiff(file, metric) * 100 | number: 1 }} %
+                {{ getMetricDiff(file, metric) | metricvalue:metric }}
               </span>
             </td>
           </tr>
