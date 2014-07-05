@@ -22,7 +22,7 @@ angular.module('metricsApp')
 
       var modalInstance = $modal.open({
         templateUrl: 'views/addProject.html',
-        controller: AddProjectCtl,
+        controller: ['$scope', '$modalInstance', 'Api', AddProjectCtl],
         size: size
       });
 
