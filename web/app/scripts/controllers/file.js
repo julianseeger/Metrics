@@ -10,6 +10,13 @@
 angular.module('metricsApp')
   .controller('FileCtl', ['$scope', '$rootScope', 'Api', 'ProjectScope', function ($scope, $rootScope, Api, ProjectScope) {
 
+    $scope.metric = 'coverage';
+
+    $scope.setMetric = function (metric) {
+      $scope.metric = metric;
+      console.log(metric);
+    };
+
     $scope.reloadFiles = function () {
       Api.getVersions(ProjectScope.project).$promise.then(function(versions){
         versions.sort(function(versionA, versionB) {

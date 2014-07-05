@@ -1719,10 +1719,9 @@ td.beauty-hover {
   color: #f8f8f8;
 }
 #dashboard_tabs {
-  background:#f8f8f8;
-  -webkit-border-radius: 4px 0 0 4px;
-  -moz-border-radius: 4px 0 0 4px;
-  border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    padding-right: 0 !important;
 }
 #dashboard-overview {
   padding-bottom:15px;

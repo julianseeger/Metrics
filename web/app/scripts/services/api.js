@@ -2,6 +2,14 @@ function Project(name) {
   this.name = name;
 }
 
+function Metric(name) {
+  this.name = name;
+  this.isPercentaged = false;
+  this.isInternal = false;
+  this.isAbsolute = true;
+  this.moreIsBetter = false;
+}
+
 angular.module('metricsApp').factory('Api', ['$resource', function ($resource) {
   return new ApiService($resource)
 }]);
