@@ -70,8 +70,6 @@ class CloverSensor extends AbstractSensor implements Sensor
 
     private function detectCommonPathPrefix($coverage)
     {
-        $prefix = null;
-
         /** @var File $files */
         $files = [];
         foreach ($coverage->projects as $cloverProject) {
