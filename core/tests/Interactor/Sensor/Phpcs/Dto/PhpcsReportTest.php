@@ -9,7 +9,7 @@ class PhpcsReportTest extends \PHPUnit_Framework_TestCase
     private $fixture = <<<'FIXTURE'
 <?xml version="1.0" encoding="UTF-8"?>
 <phpcs version="1.5.3">
-<file name="/home/julian/PhpstormProjects/Best-AskSmart/migrations/deltas/Version20140515175057.php"
+<file name="/home/julian/PhpstormProjects/asd/migrations/deltas/Version20140515175057.php"
  errors="8" warnings="1">
  <error line="15" column="16" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket"
   severity="5">Opening parenthesis of a multi-line function call must be the last content on the line</error>
@@ -30,7 +30,7 @@ class PhpcsReportTest extends \PHPUnit_Framework_TestCase
  <error line="401" column="10" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine"
  severity="5">Closing parenthesis of a multi-line function call must be on a line by itself</error>
 </file>
-<file name="/home/julian/PhpstormProjects/Best-AskSmart/migrations/deltas/Version20140613103354.php"
+<file name="/home/julian/PhpstormProjects/asd/migrations/deltas/Version20140613103354.php"
  errors="4" warnings="0">
  <error line="15" column="16" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket"
   severity="5">Opening parenthesis of a multi-line function call must be the last content on the line</error>
