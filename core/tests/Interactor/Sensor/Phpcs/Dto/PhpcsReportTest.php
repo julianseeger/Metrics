@@ -51,11 +51,11 @@ FIXTURE;
         $this->assertEquals(2, count($report->files));
         $file = $report->files[0];
         $this->assertEquals(
-            '/home/julian/PhpstormProjects/Best-AskSmart/migrations/deltas/Version20140515175057.php',
+            '/home/julian/PhpstormProjects/asd/migrations/deltas/Version20140515175057.php',
             $file->name
         );
         $this->assertEquals(
-            '/home/julian/PhpstormProjects/Best-AskSmart/migrations/deltas/Version20140613103354.php',
+            '/home/julian/PhpstormProjects/asd/migrations/deltas/Version20140613103354.php',
             $report->files[1]->name
         );
 
