@@ -4,6 +4,7 @@ namespace Metrics\Core\Interactor;
 
 use Metrics\Core\Entity\MaterialType;
 use Metrics\Core\Interactor\Sensor\Clover\CloverSensor;
+use Metrics\Core\Interactor\Sensor\Phpcs\PhpcsSensor;
 use Metrics\Core\Interactor\Sensor\Sensor;
 use Metrics\Core\Repository\FileRepository;
 use Metrics\Core\Repository\FileVersionRepository;
@@ -60,6 +61,11 @@ class AddMaterialInteractor
          */
         $sensors = [
             new CloverSensor(
+                $this->fileRepository,
+                $this->fileVersionRepository,
+                $this->metricsRepository
+            ),
+            new PhpcsSensor(
                 $this->fileRepository,
                 $this->fileVersionRepository,
                 $this->metricsRepository

@@ -126,16 +126,8 @@ class CloverSensor extends AbstractSensor implements Sensor
         }
     }
 
-    /**
-     * @param DirectoryVersion $dir
-     */
-    private function attachDirectoryMetrics(DirectoryVersion $dir)
+    protected function calculateDirectoryMetrics(DirectoryVersion $dir)
     {
-        foreach ($dir->getFiles() as $file) {
-            if ($file instanceof DirectoryVersion) {
-                $this->attachDirectoryMetrics($file);
-            }
-        }
         $lineCoverageMetric = $this->metricRepository->getMetric(Metric::LINE_COVERAGE);
         $statementsMetric = $this->metricRepository->getMetric('statements');
         $coveredstatementsMetric = $this->metricRepository->getMetric('coveredstatements');

@@ -2,6 +2,8 @@
 
 namespace Metrics\Core\Interactor\Sensor;
 
+use Metrics\Core\Entity\DirectoryVersion;
+
 abstract class AbstractSensor implements Sensor
 {
     /**
@@ -28,4 +30,20 @@ abstract class AbstractSensor implements Sensor
 
         return join('/', $prefix);
     }
+
+    /**
+     * @param DirectoryVersion $dir
+     */
+    protected function attachDirectoryMetrics(DirectoryVersion $dir)
+    {
+        foreach ($dir->getFiles() as $file) {
+            if ($file instanceof DirectoryVersion) {
+                $this->attachDirectoryMetrics($file);
+            }
+        }
+
+        $this->calculateDirectoryMetrics($dir);
+    }
+
+    abstract protected function calculateDirectoryMetrics(DirectoryVersion $dir);
 }
