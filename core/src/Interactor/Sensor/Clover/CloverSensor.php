@@ -9,6 +9,7 @@ use Metrics\Core\Entity\MaterialType;
 use Metrics\Core\Entity\Metric;
 use Metrics\Core\Entity\Project;
 use Metrics\Core\Entity\Version;
+use Metrics\Core\Interactor\Sensor\AbstractSensor;
 use Metrics\Core\Interactor\Sensor\Clover\Dto\Coverage;
 use Metrics\Core\Interactor\Sensor\Clover\Dto\File;
 use Metrics\Core\Interactor\Sensor\Clover\Dto\HasMetrics;
@@ -17,7 +18,7 @@ use Metrics\Core\Repository\FileRepository;
 use Metrics\Core\Repository\FileVersionRepository;
 use Metrics\Core\Repository\MetricRepository;
 
-class CloverSensor implements Sensor
+class CloverSensor extends AbstractSensor implements Sensor
 {
     /**
      * @var FileRepository
@@ -81,22 +82,13 @@ class CloverSensor implements Sensor
             }
         }
 
+        $paths = [];
         foreach ($files as $cloverFile) {
             $filepath = trim($cloverFile->name, '/');
-            $pathArray = explode('/', $filepath);
-            if ($prefix === null) {
-                $prefix = $pathArray;
-            } else {
-                for ($i = 0; $i < count($prefix); $i++) {
-                    if (!isset($pathArray[$i]) || $pathArray[$i] != $prefix[$i]) {
-                        $prefix = array_slice($prefix, 0, $i);
-                        break;
-                    }
-                }
-            }
+            $paths[] = $filepath;
         }
 
-        return join('/', $prefix);
+        return $this->getPrefixByPathArray($paths);
     }
 
     /**
