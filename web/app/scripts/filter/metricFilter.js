@@ -16,6 +16,6 @@ angular.module('metricsApp')
       }
 
       var more = diff > 0;
-      return (more && metric.moreIsBetter) ? 'label-success' : 'label-danger';
+      return (more && metric.moreIsBetter || !more && !metric.moreIsBetter) ? 'label-success' : 'label-danger';
     };
   });
