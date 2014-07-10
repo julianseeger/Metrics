@@ -1,10 +1,12 @@
 <?php
 
+use Metrics\Core\Interactor\AuthenticateInteractor;
 use Metrics\Core\Interactor\ShowProjectsInteractor;
 use Metrics\Web\Presenter\JsonShowProjectsPresenter;
 use Metrics\Web\Presenter\JsonShowVersionsPresenter;
 use Metrics\Web\Repository\File\FileRepositoryFactory;
 use Metrics\Web\Repository\RepositoryFactory;
+use Silex\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,9 +20,30 @@ $app->register(
         'twig.path' => __DIR__,
     )
 );
+$app->register(new Silex\Provider\SessionServiceProvider());
+
+$config = \Symfony\Component\Yaml\Yaml::parse(file_get_contents('../../config/application.yml'));
+$superadmin = $config['user']['superadmin'];
 
 /** @var RepositoryFactory $repositoryFactory */
-$repositoryFactory = new FileRepositoryFactory('/tmp');
+$repositoryFactory = new FileRepositoryFactory('/tmp', $superadmin['name'], $superadmin['pass']);
+$app->before(
+    function (Request $request) use ($app, $repositoryFactory) {
+        /** @var Route $route */
+        $route = $app['routes']->get($request->get('_route'));
+        if ($route->getPath() !== '/login') {
+            $user = $app['session']->get('user');
+            $authenticateInteractor = new AuthenticateInteractor($repositoryFactory->getUserRepository());
+            $authenticateInteractor->execute($user['username'], $user['password']);
+        }
+    }
+);
+$app->error(
+    function (\Metrics\Core\Interactor\Exception\AuthenticationRequiredException $e, $code) {
+        return new Response($e->getMessage(), 401, ['X-Status-Code' => 401]);
+    }
+);
+
 $app->get(
     '/',
     function () use ($app) {
@@ -33,6 +56,16 @@ $app->get(
         $presenter = new JsonShowProjectsPresenter();
         $interactor = new ShowProjectsInteractor($repositoryFactory->getProjectRepository(), $presenter);
         return $interactor->execute();
+    }
+);
+$app->post(
+    '/login',
+    function (Request $request) use ($repositoryFactory, $app) {
+        $content = json_decode($request->getContent());
+        $interactor = new AuthenticateInteractor($repositoryFactory->getUserRepository());
+        $user = $interactor->execute($content->name, $content->password);
+        $app['session']->set('user', ['username' => $user->getName(), 'password' => $user->getPassword()]);
+        return new Response("", 200);
     }
 );
 $app->get(

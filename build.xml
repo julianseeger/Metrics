@@ -4,6 +4,7 @@
     <property name="npm-executable" value="/usr/bin/npm"/>
     <property name="client-root" value="${basedir}/web"/>
     <property name="server-root" value="${basedir}/web/php"/>
+    <property name="config-root" value="${basedir}/web/config"/>
     <property name="core-root" value="${basedir}/core"/>
     <property name="dist" value="${basedir}/build/dist"/>
     <property name="phpunit" value="${basedir}/phpunit"/>
@@ -74,6 +75,11 @@
 
         <copy todir="${dist}/web/php">
             <fileset dir="${server-root}"/>
+        </copy>
+        <copy todir="${dist}/web/config">
+            <fileset dir="${config-root}">
+                <exclude name="application.yml"/>
+            </fileset>
         </copy>
     </target>
 

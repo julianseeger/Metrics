@@ -5,6 +5,7 @@
     "require": {
       "silex/silex":  "*",
       "twig/twig":    ">=1.8",
+      "symfony/yaml": "~2.5",
       "sabre/xml" : "master-dev"
     },
     "require-dev": {

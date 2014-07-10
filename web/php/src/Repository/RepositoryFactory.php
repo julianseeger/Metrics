@@ -2,11 +2,9 @@
 
 namespace Metrics\Web\Repository;
 
-use Metrics\Core\Repository\FileRepositoryMock;
-use Metrics\Core\Repository\FileVersionRepositoryMock;
-use Metrics\Core\Repository\MetricRepositoryMock;
 use Metrics\Core\Repository\ProjectRepository;
 use Metrics\Core\Repository\SensorRepository;
+use Metrics\Core\Repository\UserRepository;
 use Metrics\Core\Repository\VersionRepository;
 
 interface RepositoryFactory
@@ -40,4 +38,9 @@ interface RepositoryFactory
      * @return MetricRepositoryMock
      */
     public function getMetricsRepository();
+
+    /**
+     * @return UserRepository
+     */
+    public function getUserRepository();
 }

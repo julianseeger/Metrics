@@ -2,10 +2,10 @@
 
 namespace Metrics\Web\Repository\File;
 
-use Metrics\Core\Repository\FileRepositoryMock;
-use Metrics\Core\Repository\FileVersionRepositoryMock;
-use Metrics\Core\Repository\MetricRepositoryMock;
+use Metrics\Core\Entity\User;
 use Metrics\Core\Repository\ProjectRepository;
+use Metrics\Core\Repository\Simple\SimpleUserRepository;
+use Metrics\Core\Repository\UserRepository;
 use Metrics\Core\Repository\VersionRepository;
 use Metrics\Web\Repository\AbstractRepositoryFactory;
 use Metrics\Web\Repository\RepositoryFactory;
@@ -13,10 +13,14 @@ use Metrics\Web\Repository\RepositoryFactory;
 class FileRepositoryFactory extends AbstractRepositoryFactory implements RepositoryFactory
 {
     private $directory;
+    private $superadminUser;
+    private $superadminPass;
 
-    public function __construct($directory)
+    public function __construct($directory, $superadminUser, $superadminPass)
     {
         $this->directory = $directory;
+        $this->superadminUser = $superadminUser;
+        $this->superadminPass = $superadminPass;
     }
 
     /**
@@ -57,5 +61,15 @@ class FileRepositoryFactory extends AbstractRepositoryFactory implements Reposit
     public function getMetricsRepository()
     {
         return new FileMetricRepository($this->directory);
+    }
+
+    /**
+     * @return UserRepository
+     */
+    public function getUserRepository()
+    {
+        $userRepository = new SimpleUserRepository();
+        $userRepository->addUser(new User($this->superadminUser, $this->superadminPass));
+        return $userRepository;
     }
 }

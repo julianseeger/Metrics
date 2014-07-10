@@ -1,0 +1,4 @@
+user:
+    superadmin:
+        name: admin
+        pass: admin
