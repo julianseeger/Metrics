@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Metrics-Configuration" basedir="." default="configure">
+    <property environment="env"/>
+    <echo message="using ADMIN_USER=${env.ADMIN_USER} for adminuser"/>
+    <echo message="using ADMIN_PASSWORD=***** for adminpass"/>
+    <echo message="using DATABASE_DIR=${env.DATABASE_DIR} for database.dir"/>
+    <property name="adminuser" value="${env.ADMIN_USER}"/>
+    <property name="adminpass" value="${env.ADMIN_PASSWORD}"/>
+    <property name="database.dir" value="${env.DATABASE_DIR}"/>
+
+    <target name="configure" depends="check-input">
+        <copy file="${basedir}/web/config/application.yml.dist" tofile="${basedir}/web/config/application.yml"/>
+        <replaceregexp match="name:(.*)" replace="name: ${adminuser}" file="${basedir}/web/config/application.yml"
+                       byline="true"/>
+        <replaceregexp match="pass:(.*)" replace="pass: ${adminpass}" file="${basedir}/web/config/application.yml"
+                       byline="true"/>
+        <replaceregexp match="database.dir:(.*)" replace="database.dir: ${database.dir}"
+                       file="${basedir}/web/config/application.yml" byline="true"/>
+    </target>
+
+    <target name="check-input">
+        <fail message="Missing input">
+            <condition>
+                <or>
+                    <equals arg1="${adminuser}" arg2="$${env.ADMIN_USER}"/>
+                    <equals arg1="${adminpass}" arg2="$${env.ADMIN_PASSWORD}"/>
+                    <equals arg1="${database.dir}" arg2="$${env.DATABASE_DIR}"/>
+                </or>
+            </condition>
+        </fail>
+    </target>
+</project>

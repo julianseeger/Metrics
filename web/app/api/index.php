@@ -26,7 +26,7 @@ $config = \Symfony\Component\Yaml\Yaml::parse(file_get_contents('../../config/ap
 $superadmin = $config['user']['superadmin'];
 
 /** @var RepositoryFactory $repositoryFactory */
-$repositoryFactory = new FileRepositoryFactory('/tmp', $superadmin['name'], $superadmin['pass']);
+$repositoryFactory = new FileRepositoryFactory($config['database.dir'], $superadmin['name'], $superadmin['pass']);
 $app->before(
     function (Request $request) use ($app, $repositoryFactory) {
         /** @var Route $route */
@@ -65,7 +65,14 @@ $app->post(
         $interactor = new AuthenticateInteractor($repositoryFactory->getUserRepository());
         $user = $interactor->execute($content->name, $content->password);
         $app['session']->set('user', ['username' => $user->getName(), 'password' => $user->getPassword()]);
-        return new Response("", 200);
+        return new Response("", 204);
+    }
+);
+$app->post(
+    '/logout',
+    function () use ($app) {
+        $app['session']->remove('user');
+        return new Response("", 204);
     }
 );
 $app->get(

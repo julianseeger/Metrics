@@ -2,3 +2,4 @@ user:
     superadmin:
         name: admin
         pass: admin
+database.dir: /tmp

@@ -1,6 +1,22 @@
 Metrics
 =======
 
+Usage
+=====
+
+The default ant target "build" will create a distribution at /build/dist.
+You may configure it by using the ant file configure.xml:
+```bash
+ant
+cd build/dist
+
+export DATABASE_DIR=/tmp
+export ADMIN_USER=admin
+export ADMIN_PASSWORD=admin
+ant -f configure.xml
+```
+Afterwards, point the DocumentRoot of your Apache (or similar) to build/dist/web/public
+
 Setup
 =====
 

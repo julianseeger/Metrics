@@ -104,6 +104,8 @@
     <target name="install" depends="install-js, install-server"/>
 
     <target name="dist">
+        <copy todir="${dist}" file="${basedir}/resources/configure.xml"/>
+
         <copy todir="${dist}" file="${basedir}/resources/start.sh"/>
         <chmod perm="777" file="${dist}/start.sh"/>
     </target>

@@ -19,8 +19,7 @@ angular
     'ui.bootstrap',
     'angularFileUpload'
   ])
-  .config(['$routeProvider', function ($routeProvider) {
-
+  .config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -41,4 +40,23 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+
+    var interceptor = ["$rootScope", "$q", function ($rootScope, $q) {
+      // Die Promise enthält eine Response; wir müssen wieder eine Promise zurückliefern
+      return function (promise) {
+        return promise.then(
+          function (response) {
+            return response;
+          }, // alles ok, dabei belassen wir es
+          function (response) {
+            if (response.status == 401) {
+              $rootScope.$emit('authentication required');
+            }
+            return $q.reject(response);
+          }
+        );
+      };
+    }];
+    $httpProvider.responseInterceptors.push(interceptor);
+
   }]);

@@ -22,6 +22,19 @@ function ApiService($resource) {
   this.versionsApi = $resource(this.url + 'versions/:project', {project: '@project'});
   this.fileMetricsApi = $resource(this.url + 'metrics/file/:project/:version', {project: '@project', version: '@version'});
   this.timeSeriesApi = $resource(this.url + 'timeseries/:project/:metric', {project: '@project', metric: '@metric'});
+  this.loginApi = $resource(this.url + 'login', {}, {
+    login: {method: 'POST'}
+  });
+  this.logoutApi = $resource(this.url + 'logout', {}, {
+    logout: {method: 'POST'}
+  });
+
+  this.login = function (name, password) {
+    return this.loginApi.login({name: name, password: password});
+  };
+  this.logout = function () {
+    return this.logoutApi.logout();
+  };
 
   /** @type Project project */
   this.addProject = function(project) {

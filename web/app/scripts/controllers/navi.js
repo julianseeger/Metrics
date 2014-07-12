@@ -9,6 +9,7 @@
  */
 angular.module('metricsApp')
   .controller('NaviCtl', ['$scope', '$rootScope', '$location', '$modal', 'Api', 'ProjectScope', function ($scope, $rootScope, $location, $modal, Api, ProjectScope) {
+
     /** @type ApiService Api */
     $scope.projects = [];
     $scope.ProjectScope = ProjectScope;
@@ -16,6 +17,12 @@ angular.module('metricsApp')
 
     $scope.isActive = function(route) {
       return route === $location.path();
+    };
+
+    $scope.logout = function () {
+      Api.logout().$promise.then(function () {
+        $rootScope.$emit('authentication required');
+      });
     };
 
     $scope.addProject = function (size) {
@@ -47,4 +54,25 @@ angular.module('metricsApp')
     $scope.reloadProjects();
     $rootScope.$on('versionsChange', $scope.reloadVersions);
     $rootScope.$on('projectsChange', $scope.reloadProjects);
+
+    $scope.loginOpen = false;
+    $rootScope.$on('authentication required', function () {
+      if (!Api.loginOpen) {
+        Api.loginOpen = true;
+        var modalInstance = $modal.open({
+          templateUrl: 'login.html',
+          controller: LoginCtl,
+          backdrop: 'static',
+          size: 'sm'
+        });
+        modalInstance.result.then(function () {
+          Api.loginOpen = false;
+        }, function () {
+          Api.loginOpen = false;
+        });
+      }
+    });
+
+    $rootScope.$on('login', $scope.reloadVersions);
+    $rootScope.$on('login', $scope.reloadProjects);
   }]);

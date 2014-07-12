@@ -1951,10 +1951,10 @@ td.beauty-hover {
   border-radius: 4px;
 }
 .modal-backdrop {
-  z-index: 2000;
+    z-index: 2000 !important;
 }
 .modal {
-  z-index: 2001;
+    z-index: 2001 !important;
 }
 .fc-event {
   border: 1px solid #6AA6D6;
